@@ -1,0 +1,12 @@
+Django
+Pillow
+django-cleanup 
+django-unfold
+python-dotenv
+flake8
+black
+isort
+django-import-export
+tablib[xlsx]         # Pour exporter en .xlsx
+openpyxl             # Librairie utilisée par tablib pour gérer les .xlsx
+xlwt                 # Pour exporter en .xls

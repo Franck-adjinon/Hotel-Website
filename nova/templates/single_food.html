@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block page_title %}
+<title>{{ article.titre }} - Hôtel</title>
+{% endblock %}
+
+
+{% block meta_description %}
+<meta name="description" content="Hotel gastronomique 5 étoiles">
+{% endblock %}
+
+
+
+
+
+{% block app_name %}  
+  {% if site_info %}
+    {{ site_info.app_name }}
+  {% endif %} 
+{% endblock %}
+
+{% block leadtext %} 
+    {% if plats %}
+        <h1 class="heading mb-3">Plats</h1>
+        <ul class="custom-breadcrumbs mb-4">
+            <li><a href="#">Accueil</a></li>
+            <li>&bullet;</li>
+            <li>Plats</li>
+        </ul> 
+    {% endif %}
+    {% if chambre_x %}
+        <h1 class="heading mb-3">Chambre</h1>
+        <ul class="custom-breadcrumbs mb-4">
+            <li><a href="#">Accueil</a></li>
+            <li>&bullet;</li>
+            <li>Chambre</li>
+        </ul> 
+    {% endif %}
+{% endblock %}
+
+
+
+{% block SingleFoodpage_section %}
+    {% if plats %}
+        <section class="section bg-light"> 
+            <div class="container"> 
+                <div class="site-block-half d-block d-lg-flex bg-white" data-aos="fade" data-aos-delay="100">
+                    <a href="{% url 'plat_detail' plats.nom %}" class="image d-block bg-image-2" style="background-image: url('{{plats.image.url}}');"></a>
+                    <div class="text">
+                        <span class="d-block mb-4">
+                            <span class="display-4 text-primary">
+                                {{plats.prix|floatformat:-2}} CFA  
+                            </span> 
+                        </span>
+                        <h2 class="mb-4">{{plats.nom}}</h2>
+                        <p>
+                            {{plats.description}}
+                        </p>
+                    </div>
+                </div> 
+            </div>
+        </section>
+    {% endif %}
+
+    {% if chambre_x %}
+        <section class="section bg-light"> 
+            <div class="container"> 
+                <div class="site-block-half d-block d-lg-flex bg-white" data-aos="fade" data-aos-delay="100">
+                    <a href="{% url 'reservation' %}" class="image d-block bg-image-2" style="background-image: url('{{chambre_x.image.url}}');"></a>
+                    <div class="text">
+                        <span class="d-block mb-4">
+                            <span class="display-4 text-primary">
+                                {{chambre_x.prix_nuit|floatformat:-2}} CFA  
+                            </span> 
+                        </span>
+                        {% if chambre_x.type_chambre == 'S' %}
+                            <h2 class="mb-4">
+                                Chambre Simple
+                            </h2>
+                        {% elif chambre_x.type_chambre == 'F' %}
+                            <h2 class="mb-4">
+                                Chambre familiale
+                            </h2>
+                        {% elif chambre_x.type_chambre == 'P' %}
+                            <h2 class="mb-4">
+                                Chambre Présidentielle
+                            </h2>
+                        {% endif %}
+                        <p>
+                            {{chambre_x.description}}
+                        </p> 
+                        <p><a href="{% url 'reservation' %}" class="btn btn-primary text-white">Réservez maintenant</a></p>
+                    </div>
+                </div> 
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
+
+
+    <!-- Hotel adress section -->
+    {% block hotel_adress %} 
+      {% if site_info %}
+        {{site_info.app_adresse}}
+      {% endif %}
+    {% endblock %}
+    <!-- Fin section -->
+    
+    <!-- Hotel contact section -->
+    {% block hotel_contact%}
+        
+        {% for ct in contacts_site %}
+          {{ct.contact}} <br>
+        {% endfor %}
+          
+    {% endblock %}
+    <!-- Fin section -->
+    
+    <!-- Hotel mail section -->
+    {% block hotel_mail %} 
+    {% if site_info %}
+      {{site_info.app_mailadresse}}
+    {% endif %}
+    {% endblock %}
+    <!-- Fin section -->
+    
+    <!-- Hotel lien social section -->
+    {% block hotel_links %}
+        
+        {% for link in liens_site %}
+          {% if link.designation|lower == 'facebook' %}
+            <a href="{{ link.lien }}"><span class="fa fa-facebook"></span></a>
+          {% elif link.designation|lower == 'twitter' %}
+            <a href="{{ link.lien }}"><span class="fa fa-twitter"></span></a>
+          {% elif link.designation|lower == 'linkedin' %}
+            <a href="{{ link.lien }}"><span class="fa fa-linkedin"></span></a>
+          {% elif link.designation|lower == 'vimeo' %}
+            <a href="{{ link.lien }}"><span class="fa fa-vimeo"></span></a>
+          {% endif %} 
+        {% endfor %}
+        
+    {% endblock %}
+    <!-- Fin section -->

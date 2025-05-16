@@ -400,8 +400,7 @@ class PriceNumericFilter(SliderNumericFilter):
 
 @admin.register(chambre)
 class chambreAdmin(ModelAdmin):
-    list_display = ("price", "nb_lit", "pin", "status", "create_date")
-    # search_fields = ("type_chambre",)  # Permet de rechercher par type_room
+    list_display = ("room", "price", "nb_lit", "pin", "status", "create_date") 
 
     # ajout de filtrage à l’aide de l’attribut list_filter
     list_filter_submit = True  # Bouton de soumission en bas du filtre
@@ -461,11 +460,24 @@ class chambreAdmin(ModelAdmin):
     def create_date(self, obj):
         return obj.date_creation
 
+    @admin.display(
+        ordering="type_chambre",
+        description="Chambre",
+    )
+    def room(self, obj):
+        if obj.type_chambre == "S":
+            return "Simple"
+        elif obj.type_chambre == "F":
+            return "Familiale"
+        elif obj.type_chambre == "P":
+            return "Présidentielle"
+
 
 # TODO : Gestion des réservation directement sur les chambres
 @admin.register(reservation_chambre)
-class reservation_chambreAdmin(ModelAdmin):
+class reservation_chambreAdmin(ModelAdmin): 
     list_display = (
+        "room",
         "name",
         "contact",
         "email",
@@ -473,7 +485,7 @@ class reservation_chambreAdmin(ModelAdmin):
         "date_depart",
         "nb_adult",
         "nb_kids",
-        "id_chambre",
+        "status",
         "create_date",
     )
     search_fields = (
@@ -483,7 +495,8 @@ class reservation_chambreAdmin(ModelAdmin):
 
     # ajout de filtrage à l’aide de l’attribut list_filter
     list_filter_submit = True  # Bouton de soumission en bas du filtre
-    list_filter = [ 
+    list_filter = [
+        ("is_finish", BooleanRadioFilter),
         ("date_creation", RangeDateFilter),
     ]
 
@@ -528,6 +541,28 @@ class reservation_chambreAdmin(ModelAdmin):
     )
     def create_date(self, obj):
         return obj.date_creation
+
+    @admin.display(
+        ordering="is_finish",
+        description="Terminer ?",
+    )
+    def status(self, obj):
+        if obj.is_finish == True:
+            return "OUI"
+        else:
+            return "NON"
+
+    @admin.display(
+        ordering="id_chambre",
+        description="Chambre",
+    )
+    def room(self, obj): 
+        if obj.id_chambre.type_chambre == "S" :
+            return "Simple"
+        elif obj.id_chambre.type_chambre == "F" :
+            return "Familiale"
+        elif obj.id_chambre.type_chambre == "P" :
+            return "Présidentielle"
 
 
 # TODO : Gestion des réservation (indirect) :)
@@ -540,7 +575,8 @@ class reservationAdmin(ModelAdmin):
         "date_arrive",
         "date_depart",
         "nb_adult",
-        "nb_kids", 
+        "nb_kids",
+        "status",
         "create_date",
     )
     search_fields = (
@@ -551,6 +587,7 @@ class reservationAdmin(ModelAdmin):
     # ajout de filtrage à l’aide de l’attribut list_filter
     list_filter_submit = True  # Bouton de soumission en bas du filtre
     list_filter = [
+        ("is_confirm", BooleanRadioFilter),
         ("date_creation", RangeDateFilter),
     ]
 
@@ -595,3 +632,13 @@ class reservationAdmin(ModelAdmin):
     )
     def create_date(self, obj):
         return obj.date_creation
+
+    @admin.display(
+        ordering="is_confirm",
+        description="Confirmer ?",
+    )
+    def status(self, obj):
+        if obj.is_confirm == True:
+            return "OUI"
+        else:
+            return "NON"

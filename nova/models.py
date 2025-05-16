@@ -65,7 +65,21 @@ class Article(models.Model):
                     f"Erreur lors du traitement de l'image principal : {e}"
                 )
 
+        """Envoie un email à tout les abonner de la newsletter"""
+        from .task import send_email_abonne 
+
+        is_new = self._state.adding
+
         super().save(*args, **kwargs)
+
+        if is_new:
+            sujet = "Nouvel article"
+            mail = os.getenv("EMAIL_HOST_USER")
+            titre = self.titre
+            texte = self.content
+            send_email_abonne(
+                sujet=sujet, from_client=mail, titre_article=titre, contenu=texte
+            )
 
     def __str__(self):
         return f"{self.titre} {self.date_creation}"
@@ -121,6 +135,8 @@ class ServiceClient(models.Model):
         "Texte alternatif pour accessibilité de l'image", max_length=125
     )
     nom_complet = models.CharField("Nom Complet", max_length=100, unique=True)
+    email = models.EmailField('Email', max_length=254, default="johndoe@gmail.com")
+    role = models.CharField("Rôle", max_length=50, default="Agent")
     description = models.CharField("Description", max_length=255)
     pinned = models.BooleanField("Épingler ?", default=False)
     actif = models.BooleanField("Agent actif ?", default=True)
@@ -151,7 +167,7 @@ class ServiceClient(models.Model):
 # TODO : EmailSend pour stocker les mails envoyer au agents du service clients par les clients
 class EmailSend(models.Model):
     id_message = models.AutoField(primary_key=True)
-    nom = models.CharField("Nom Client", max_length=50)
+    nom = models.CharField("Client", max_length=100)
     contact = models.CharField("Contact", max_length=50)
     email = models.EmailField("Email Client", max_length=254)
     message = models.CharField("Message du Client", max_length=255)
@@ -164,7 +180,7 @@ class EmailSend(models.Model):
 # TODO : model pour la gestion des photos
 class Photo(models.Model):
     id_photo = models.AutoField(primary_key=True)
-    titre = models.CharField("Titre", max_length=100)
+    titre = models.CharField("Titre", max_length=255)
     image = models.ImageField("Image", upload_to="photos/")
     date_creation = models.DateTimeField("Date création", auto_now_add=True)
 
@@ -232,6 +248,7 @@ class reservation(models.Model):
     nombre_adulte = models.IntegerField("Nombre d'adultes")
     nombre_enfant = models.IntegerField("Nombre d'enfants")
     message = models.CharField("Message Client", max_length=255)
+    is_confirm = models.BooleanField("Confirmer ?", default=False)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
 
 
@@ -259,6 +276,7 @@ class plat(models.Model):
 # TODO : Pour la gestion des chambre
 class chambre(models.Model):
     id_chambre = models.AutoField(primary_key=True)
+    numero_chambre = models.CharField("Numéro de chambre", default="000")
     prix_nuit = models.DecimalField("Prix chambre", max_digits=10, decimal_places=2)
     image = models.ImageField("Image chambre", upload_to="Chambre_image/")
     type_ch = {
@@ -290,4 +308,5 @@ class reservation_chambre(models.Model):
     nombre_enfant = models.IntegerField("Nombre d'enfants")
     message = models.CharField("Message Client", max_length=255)
     id_chambre = models.ForeignKey(chambre, on_delete=models.CASCADE)
+    is_finish = models.BooleanField('Terminer ?', default=False)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)

@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block page_title %}
+<title>{{ site_info.app_name }} - A propos</title>
+{% endblock %}
+
+
+{% block meta_description %}
+<meta name="description" content="Hotel gastronomique 5 étoiles">
+{% endblock %}
+
+
+
+
+
+{% block app_name %} 
+  
+  {% if site_info %}
+    {{ site_info.app_name }}
+  {% endif %}
+    
+{% endblock %}
+
+
+{% block leadtext %} 
+<h1 class="heading mb-3">À propos de nous</h1>
+<ul class="custom-breadcrumbs mb-4">
+    <li><a href="#">Accueil</a></li>
+    <li>&bullet;</li>
+    <li>À propos</li>
+</ul> 
+{% endblock %}
+
+
+{% block Aboutpage_section %}
+    <section class="py-5 bg-light" id="next">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12 col-lg-7 ml-auto order-lg-2 position-relative mb-5" data-aos="fade-up">
+            <figure class="img-absolute">
+              <img src="{% static 'images/food-1.jpg' %}" alt="Image" class="img-fluid">
+            </figure>
+            <img src="{% static 'images/img_1.jpg' %}" alt="Image" class="img-fluid rounded">
+          </div>
+          <div class="col-md-12 col-lg-4 order-lg-1" data-aos="fade-up">
+            <h2 class="heading">Bienvenue !</h2>
+            <p class="mb-4">
+              Loin, très loin, derrière les montagnes des mots, loin des pays de Vokalia et de Consonantia, vivent les
+              textes
+              aveugles. Séparés, ils vivent à Bookmarksgrove, juste au bord de la Sémantique, un vaste océan de langues.
+            </p>
+            <p><a href="#" class="btn btn-primary text-white py-2 mr-3">Nos Chambres</a> <span class="mr-3 font-family-serif"></p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <div class="container section">
+
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-md-7 mb-5">
+          <h2 class="heading" data-aos="fade-up">Leadership</h2>
+        </div>
+      </div>
+
+      <!-- Leadership Section -->
+      <div class="row">
+        {% for Leader in Leadership %}
+          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
+            <div class="block-2">
+              <div class="flipper">
+                <div class="front" style="background-image: url({{Leader.image.url}});">
+                  <div class="box">
+                    <h2>{{Leader.nom_complet}}</h2>
+                    <p>{{Leader.role}}</p>
+                  </div>
+                </div>
+                <div class="back">
+                  <!-- back content -->
+                  <blockquote>
+                    <p>&ldquo;{{Leader.description}}&rdquo;</p>
+                  </blockquote>
+                  <div class="author d-flex">
+                    <div class="image mr-3 align-self-center">
+                      <img src="{{Leader.image.url}}" alt="{{Leader.image_alt_text}}">
+                    </div>
+                    <div class="name align-self-center">{{Leader.nom_complet}}<span class="position">{{Leader.role}}</span></div>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- .flip-container -->
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- END Section -->
+
+
+    <!-- Gallery Section -->
+    <section class="section slider-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading" data-aos="fade-up">Photos</h2>
+            <p data-aos="fade-up" data-aos-delay="100">
+              Loin, très loin, derrière les montagnes des mots, loin des pays de Vokalia et de Consonantia, vivent les
+              textes
+              aveugles. Séparés, ils vivent à Bookmarksgrove, juste au bord de la Sémantique, un vaste océan de langues.
+            </p>
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-md-12">
+            <div class="home-slider major-caousel owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
+              {% for pict in pictures %}  
+                <div class="slider-item">
+                  <a href="{{pict.image.url}}" data-fancybox="images" data-caption="{{pict.titre}}"><img src="{{pict.image.url}}" alt="{{pict.titre}}" class="img-fluid"></a>
+                </div>
+              {% endfor %}  
+            </div>
+            <!-- END slider -->
+          </div> 
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+
+    <!-- History Section -->
+    <div class="section">
+      <div class="container">
+
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7 mb-5">
+            <h2 class="heading" data-aos="fade">Histoire</h2>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="timeline-item" date-is='2015' data-aos="fade">
+              <h3>Ouverture de l'Hôtel Nova</h3>
+              <p>
+                En 2015, l’Hôtel Nova ouvrait ses portes pour la première fois à Tsévié, avec pour ambition de redéfinir l’hospitalité locale. Installé dans un cadre calme et verdoyant, l’hôtel proposait initialement 10 chambres simples et un petit restaurant familial.
+              </p>
+              <p>
+                Grâce à un service chaleureux et personnalisé, Nova s’est rapidement forgé une réputation de référence pour les voyageurs et professionnels de passage dans la région.
+              </p>
+            </div>
+            
+            <div class="timeline-item" date-is='2019' data-aos="fade">
+              <h3>Extension et Modernisation</h3>
+              <p>
+                En réponse à une demande croissante, l’hôtel a connu en 2019 une importante phase de rénovation : ajout de chambres familiales, construction d’une piscine, création d’une salle de conférence et modernisation des équipements pour offrir plus de confort.
+              </p>
+              <p>
+                Cette étape marque le passage de Nova à un établissement 3 étoiles, reconnu pour son équilibre entre authenticité et modernité.
+              </p>
+            </div>
+            
+            <div class="timeline-item" date-is='2024' data-aos="fade">
+              <h3>Vers l'international et le numérique</h3>
+              <p>
+                En 2024, l’Hôtel Nova lance sa nouvelle plateforme de réservation en ligne, avec des offres spéciales pour les clients internationaux et les entreprises. Une collaboration avec des studios de design locaux permet aussi la mise en place d’un service de personnalisation des séjours.
+              </p>
+              <p>
+                Nova ambitionne désormais d’ouvrir une nouvelle succursale dans une grande ville togolaise d’ici 2026.
+              </p>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+    <!-- End Section -->
+{% endblock %}
+
+
+
+<!-- Hotel adress section -->
+{% block hotel_adress %} 
+  {% if site_info %}
+    {{site_info.app_adresse}}
+  {% endif %}
+{% endblock %}
+<!-- Fin section -->
+
+<!-- Hotel contact section -->
+{% block hotel_contact%}
+    
+    {% for ct in contacts_site %}
+      {{ct.contact}} <br>
+    {% endfor %}
+      
+{% endblock %}
+<!-- Fin section -->
+
+<!-- Hotel mail section -->
+{% block hotel_mail %} 
+{% if site_info %}
+  {{site_info.app_mailadresse}}
+{% endif %}
+{% endblock %}
+<!-- Fin section -->
+
+<!-- Hotel lien social section -->
+{% block hotel_links %}
+    
+    {% for link in liens_site %}
+      {% if link.designation|lower == 'facebook' %}
+        <a href="{{ link.lien }}"><span class="fa fa-facebook"></span></a>
+      {% elif link.designation|lower == 'twitter' %}
+        <a href="{{ link.lien }}"><span class="fa fa-twitter"></span></a>
+      {% elif link.designation|lower == 'linkedin' %}
+        <a href="{{ link.lien }}"><span class="fa fa-linkedin"></span></a>
+      {% elif link.designation|lower == 'vimeo' %}
+        <a href="{{ link.lien }}"><span class="fa fa-vimeo"></span></a>
+      {% endif %} 
+    {% endfor %}
+    
+{% endblock %}
+<!-- Fin section -->

@@ -157,6 +157,8 @@ class HotelInfoAdmin(ModelAdmin):
     def create_date(self, obj):
         return obj.date_creation
 
+    paginator = InfinitePaginator
+    show_full_result_count = False
 
 # TODO : testimony pour stocker les témoignagnes
 @admin.register(testimony)
@@ -195,6 +197,8 @@ class testimonyAdmin(ModelAdmin):
     def create_date(self, obj):
         return obj.date_creation
 
+    paginator = InfinitePaginator
+    show_full_result_count = False
 
 # TODO : LienSocialeCompany pour stocker les lien sociales de l'hôtel
 @admin.register(LienSocialeCompany)
@@ -207,7 +211,9 @@ class LienSocialeCompanyAdmin(ModelAdmin):
     list_filter = [
         ("designation", FieldTextFilter),
     ]
-
+    
+    paginator = InfinitePaginator
+    show_full_result_count = False
 
 # TODO : ContactCompany pour stocker les contacts de l'hôtel
 @admin.register(ContactCompany)
@@ -227,6 +233,9 @@ class ContactCompanyAdmin(ModelAdmin):
     )
     def create_date(self, obj):
         return obj.date_creation
+
+    paginator = InfinitePaginator
+    show_full_result_count = False
 
 
 # TODO : NewsLetterEmail pour stocker les emails des visiteurs pour les articles
@@ -259,6 +268,9 @@ class NewsLetterEmailAdmin(ModelAdmin):
     def mail(self, obj):
         return obj.email_visteur
 
+    paginator = InfinitePaginator
+    show_full_result_count = False
+
 
 # TODO : Gestion des photos
 @admin.register(Photo)
@@ -286,6 +298,9 @@ class PhotoAdmin(admin.ModelAdmin):
     )
     def create_date(self, obj):
         return obj.date_creation
+
+    paginator = InfinitePaginator
+    show_full_result_count = False
 
 
 # TODO : Gestion des plats
@@ -326,6 +341,8 @@ class platAdmin(ModelAdmin):
     def create_date(self, obj):
         return obj.date_creation
 
+    paginator = InfinitePaginator
+    show_full_result_count = False
 
 # TODO : Gestion des agents du service clients
 @admin.register(ServiceClient)
@@ -371,6 +388,9 @@ class ServiceclientAdmin(ModelAdmin):
     def create_date(self, obj):
         return obj.date_creation
 
+    paginator = InfinitePaginator
+    show_full_result_count = False
+
 
 # TODO : EmailSend pour stocker les emails des visiteurs et en même temps envoyer aux agents du service clients
 @admin.register(EmailSend)
@@ -391,8 +411,11 @@ class EmailSendAdmin(ModelAdmin):
     def create_date(self, obj):
         return obj.date_creation
 
+    paginator = InfinitePaginator
+    show_full_result_count = False
 
-# TODO : Gestion des chambres
+
+# TODO : Gestion des chambres & configuration ramètrages du filtres
 class PriceNumericFilter(SliderNumericFilter):
     MAX_DECIMALS = 2
     STEP = 10
@@ -471,6 +494,9 @@ class chambreAdmin(ModelAdmin):
             return "Familiale"
         elif obj.type_chambre == "P":
             return "Présidentielle"
+
+    paginator = InfinitePaginator
+    show_full_result_count = False
 
 
 # TODO : Gestion des réservation directement sur les chambres
@@ -564,6 +590,9 @@ class reservation_chambreAdmin(ModelAdmin):
         elif obj.id_chambre.type_chambre == "P" :
             return "Présidentielle"
 
+    paginator = InfinitePaginator
+    show_full_result_count = False
+
 
 # TODO : Gestion des réservation (indirect) :)
 @admin.register(reservation)
@@ -642,3 +671,6 @@ class reservationAdmin(ModelAdmin):
             return "OUI"
         else:
             return "NON"
+
+    paginator = InfinitePaginator
+    show_full_result_count = False

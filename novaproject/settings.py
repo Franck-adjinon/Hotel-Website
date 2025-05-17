@@ -34,18 +34,23 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# ALLOWED_HOSTS = ["f421-2c0f-f0f8-606-fd00-7c22-123e-a05b-63bc.ngrok-free.app"]
+# CSRF_TRUSTED_ORIGINS = [
+#    "https://f421-2c0f-f0f8-606-fd00-7c22-123e-a05b-63bc.ngrok-free.app",
+# ]
+
 
 # Application definition
 
 INSTALLED_APPS = [
     # Ajout des apps relatif à unfold
     "unfold",  # before django.contrib.admin
-    "unfold.contrib.filters",  # optional, if special filters are needed
-    "unfold.contrib.forms",  # optional, if special form elements are needed
-    "unfold.contrib.inlines",  # optional, if special inlines are needed
-    "unfold.contrib.import_export",  # optional, if django-import-export package is used
-    "unfold.contrib.guardian",  # optional, if django-guardian package is used
-    "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
+    "unfold.contrib.filters",   
+    "unfold.contrib.forms",  
+    "unfold.contrib.inlines",   
+    "unfold.contrib.import_export",  
+    "unfold.contrib.guardian",   
+    "unfold.contrib.simple_history",   
     # Fin d'ajout des apps relatif à unfold
     "django.contrib.admin",
     "django.contrib.auth",
@@ -65,6 +70,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "novaproject.urls"
@@ -128,6 +134,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = (
+    ("en", _("English")),
+    ("de", _("German")),
+    ("fr", _("French")),
+)
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -150,6 +162,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Todo: Paramètres de unfold
 UNFOLD = {
+    "SHOW_LANGUAGES": True,  # Afficher l'option de modification des languew
     "SITE_TITLE": "Gestion Hôtel Nova",
     "SITE_HEADER": "NOVA",
     "SITE_ICON": {
@@ -166,7 +179,7 @@ UNFOLD = {
     ],
     "ENVIRONMENT": "nova.utils.environment_callback",
     "SIDEBAR": {
-        "show_search": True,  # # Activer/Désactiver la barre de recherche
+        "show_search": True,  # Activer/Désactiver la barre de recherche
         "show_all_applications": False,  # Activer/Désactiver la liste déroulante des applications
         "navigation": [
             {
@@ -222,7 +235,7 @@ UNFOLD = {
                         "title": _("Emails Clients"),
                         "icon": "mail",
                         "link": reverse_lazy("admin:nova_emailsend_changelist"),
-                    }, 
+                    },
                     {
                         "title": _("Nos liens sociaux"),
                         "icon": "share",

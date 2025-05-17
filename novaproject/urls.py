@@ -14,16 +14,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
-# todo: Les deux imports suivants sont mis en place pour que Django sert les fichiers statiques automatiquement
+from django.conf.urls.i18n import i18n_patterns
 from django.conf import settings
 from django.conf.urls.static import static
 
+# urlpatterns = [
+#    path('', include('nova.urls')),
+#    path('admin/', admin.site.urls),
+# ]
 urlpatterns = [
-    path('', include('nova.urls')),
-    path('admin/', admin.site.urls),
-]
+    path("", include("nova.urls")),
+    path("i18n/", include("django.conf.urls.i18n")),
+] + i18n_patterns(
+    path("admin/", admin.site.urls),
+)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

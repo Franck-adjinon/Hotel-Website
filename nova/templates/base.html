@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE HTML>
-<html>
+<html lang="fr">
 
 <head> 
     <meta charset="utf-8">
@@ -14,12 +14,9 @@
 	<!-- Meta Description -->
     {% block meta_description %}
     {% endblock %} 
-    <meta name="author" content="NOVA" /> 
+    <meta name="author" content="Franck-ADJINON" /> 
     <!-- Favicon-->
-	<link rel="shortcut icon" href="{% static 'favicon/favicon-16.png' %}">
-    <!-- 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Sans:400,700|Playfair+Display:400,700&display=swap">
-    -->
+	<link rel="shortcut icon" href="{% static 'favicon/favicon-16.png' %}"> 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
@@ -34,10 +31,7 @@
     <link rel="stylesheet" href="{% static 'fonts/fontawesome/css/font-awesome.min.css' %}">
     
     <!-- Theme Style -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
-
-    <!-- Gallery Style 
-    <link rel="stylesheet" href="{% static 'css/gallery.css' %}">-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">  
 
     <style>
         .img-wrap {
@@ -134,7 +128,7 @@
             </div>
         </div>
 
-        <a class="mouse smoothscroll" href="#next">
+        <a class="mouse smoothscroll" title="Button to parade down" href="#next">
             <div class="mouse-icon">
                 <span class="mouse-wheel"></span>
             </div>
@@ -215,15 +209,16 @@
                 <div class="col-12 col-md-6 text-center mb-4 mb-md-0 text-md-left" data-aos="fade-up">
                     <h2 class="text-white font-weight-bold">Un meilleur endroit où séjourner !</h2>
                 </div>
-                <div class="col-12 col-md-6 text-center text-md-right" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-12 col-md-6 text-center text-md-right" data-aos="fade-up" data-aos-delay="200"> 
                     <a href="{% url 'reservation' %}" class="btn btn-outline-white-primary py-3 text-white px-5">Réservez dès
-                        maintenant</a>
+                        maintenant</a> 
                 </div>
             </div>
         </div>
     </section>
     <!-- End Section -->
 
+    <!-- footer section -->
     <footer class="section footer-section">
         <div class="container">
             <div class="row mb-4">
@@ -282,18 +277,19 @@
 						{% endif %}
                         <div class="form-group">
                             <input type="email" class="form-control" name="from_email" placeholder="Email...">
-                            <button type="submit" class="btn"><span class="fa fa-paper-plane"></span></button>
+                            <button type="submit" title="Inscrivez-vous à notre newsletter" class="btn"><span class="fa fa-paper-plane"></span></button>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="row pt-5">
                 <p class="col-md-6 text-left">
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;
-                    <script>document.write(new Date().getFullYear());</script> Tous droits réservés | Ce design est
-                    réalisé <i class="icon-heart-o" aria-hidden="true"></i> par <a href="https://colorlib.com"
-                        target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> 
+                    Copyright &copy; 
+                        <script>document.write(new Date().getFullYear());</script> Tous droits réservés | Ce design est réalisé <i
+                        class="icon-heart-o" aria-hidden="true"></i> par <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        | Intégration et développement par <a href="https://github.com/Franck-adjinon"
+                            target="_blank">ADJINON Franck</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </p>
 
@@ -305,6 +301,7 @@
             </div>
         </div>
     </footer>
+    <!-- Fin section -->
 
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
@@ -319,27 +316,8 @@
     </script>
     <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
     <script src="{% static 'js/jquery.timepicker.min.js' %}"></script> 
-    <script src="{% static 'js/main.js' %}"></script> 
-
-
-    <script>
-        $(document).ready(function () {
-            var today = new Date();
+    <script src="{% static 'js/main.js' %}"></script>  
     
-            $('#checkin_date').datepicker({
-                format: 'dd/mm/yyyy',
-                autoclose: true,
-                todayHighlight: true,
-                startDate: today  
-            });
-    
-            $('#checkout_date').datepicker({
-                format: 'dd/mm/yyyy',
-                autoclose: true,
-                startDate: today  
-            });
-        });
-    </script> 
     
 </body>
 

@@ -19,6 +19,7 @@ env/
 
 # Logs
 *.log
+.logs/
 
 # Dossiers de statiques générées par collectstatic
 staticfiles/

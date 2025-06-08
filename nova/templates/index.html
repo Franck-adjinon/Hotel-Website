@@ -4,26 +4,26 @@
 
 
 {% block page_Title %}
-<title>{{ site_info.app_name }} Hôtel</title>
+    <title>{{ site_info.app_name }} Hôtel</title>
 {% endblock %}
 
 
 {% block meta_description %}
-<meta name="description" content="Hotel gastronomique 5 étoiles">
+    <meta name="description" content="Hotel gastronomique 5 étoiles">
 {% endblock %}
 
 
 {% block app_name %}  
-  {% if site_info %}
-    {{ site_info.app_name }}
-  {% endif %} 
+    {% if site_info %}
+        {{ site_info.app_name }}
+    {% endif %} 
 {% endblock %}
 
 
 {% block leadtext_index %}
-<span class="custom-caption text-uppercase text-white d-block  mb-3">Welcome To 5 <span
-        class="fa fa-star text-primary"></span> Hotel</span>
-<h1 class="heading">Un meilleur endroit où séjourner</h1>
+    <span class="custom-caption text-uppercase text-white d-block  mb-3">Welcome To 5 <span
+            class="fa fa-star text-primary"></span> Hotel</span>
+    <h1 class="heading">Un lieu de séjour idéal</h1>
 {% endblock leadtext_index %}
 
 
@@ -175,20 +175,15 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="home-slider major-caousel owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
-
-                    
+                <div class="home-slider major-caousel owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200"> 
                     {% for pict in pictures %}
                         <div class="slider-item">
                             <a href="{{pict.image.url}}" data-fancybox="images" data-caption="{{pict.titre}}"><img src="{{pict.image.url}}" alt="{{pict.titre}}" class="img-fluid"></a>
                         </div>
-                    {% endfor %}
-                        
-
+                    {% endfor %} 
                 </div>
                 <!-- END slider -->
-            </div>
-
+            </div> 
         </div>
     </div>
 </section>
@@ -228,7 +223,7 @@
                 <div class="tab-pane fade show active text-left" id="mains" role="tabpanel" aria-labelledby="mains-tab">
                     <div class="row">   
                         {% for plt in plats %}
-                            {% if forloop.counter <= 3 %} 
+                            {% if forloop.counter <= x_plat %} 
                             <div class="{% cycle 'col-md-6' 'col-md-6' as stripe %}"> 
                                 <div class="food-menu mb-5">
                                     <span class="d-block text-primary h4 mb-3">{{ plt.prix|floatformat:-2 }} CFA</span>
@@ -239,7 +234,7 @@
                                 </div> 
                             </div>  
                             {% endif %}
-                            {% if forloop.counter > 3 %} 
+                            {% if forloop.counter > y_plat %} 
                                 <div class="{% cycle 'col-md-6' 'col-md-6' as stripe %}"> 
                                     <div class="food-menu mb-5">
                                         <span class="d-block text-primary h4 mb-3">{{ plt.prix|floatformat:-2 }} CFA</span>
@@ -259,7 +254,7 @@
                 <div class="tab-pane fade text-left" id="desserts" role="tabpanel" aria-labelledby="desserts-tab">
                     <div class="row">
                         {% for dessert in desserts %}
-                            {% if forloop.counter <= 3 %} 
+                            {% if forloop.counter <= x_dessert %} 
                                 <div class="col-md-6">
                                     <div class="food-menu mb-5">
                                         <span class="d-block text-primary h4 mb-3">{{ dessert.prix|floatformat:-2 }} CFA</span>
@@ -270,7 +265,7 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            {% if forloop.counter > 3 %} 
+                            {% if forloop.counter > y_dessert %} 
                                 <div class="col-md-6">
                                     <div class="food-menu mb-5">
                                         <span class="d-block text-primary h4 mb-3">{{ dessert.prix|floatformat:-2 }} CFA</span>
@@ -290,7 +285,7 @@
                 <div class="tab-pane fade text-left" id="drinks" role="tabpanel" aria-labelledby="drinks-tab">
                     <div class="row"> 
                             {% for boisson in boissons %}
-                                {% if forloop.counter <= 3 %} 
+                                {% if forloop.counter <= x_boisson %} 
                                     <div class="col-md-6">
                                         <div class="food-menu mb-5">
                                             <span class="d-block text-primary h4 mb-3">{{ boisson.prix|floatformat:-2 }} CFA</span>
@@ -302,7 +297,7 @@
                                     </div>
                                 {% endif %}
                                 
-                                {% if forloop.counter > 3 %} 
+                                {% if forloop.counter > y_boisson %} 
                                     <div class="col-md-6">
                                         <div class="food-menu mb-5">
                                             <span class="d-block text-primary h4 mb-3">{{ boisson.prix|floatformat:-2 }} CFA</span>
@@ -397,44 +392,40 @@
 
 <!-- Hotel adress section -->
 {% block hotel_adress %} 
-  {% if site_info %}
-    {{site_info.app_adresse}}
-  {% endif %}
+    {% if site_info %}
+        {{site_info.app_adresse}}
+    {% endif %}
 {% endblock %}
 <!-- Fin section -->
 
 <!-- Hotel contact section -->
-{% block hotel_contact%}
-    
+{% block hotel_contact%} 
     {% for ct in contacts_site %}
-      {{ct.contact}} <br>
-    {% endfor %}
-      
+        {{ct.contact}} <br>
+    {% endfor %} 
 {% endblock %}
 <!-- Fin section -->
 
 <!-- Hotel mail section -->
 {% block hotel_mail %} 
-{% if site_info %}
-  {{site_info.app_mailadresse}}
-{% endif %}
+    {% if site_info %}
+        {{site_info.app_mailadresse}}
+    {% endif %}
 {% endblock %}
 <!-- Fin section -->
 
 <!-- Hotel lien social section -->
-{% block hotel_links %}
-    
+{% block hotel_links %} 
     {% for link in liens_site %}
-      {% if link.designation|lower == 'facebook' %}
-        <a href="{{ link.lien }}"><span class="fa fa-facebook"></span></a>
-      {% elif link.designation|lower == 'twitter' %}
-        <a href="{{ link.lien }}"><span class="fa fa-twitter"></span></a>
-      {% elif link.designation|lower == 'linkedin' %}
-        <a href="{{ link.lien }}"><span class="fa fa-linkedin"></span></a>
-      {% elif link.designation|lower == 'vimeo' %}
-        <a href="{{ link.lien }}"><span class="fa fa-vimeo"></span></a>
-      {% endif %} 
-    {% endfor %}
-    
+        {% if link.designation|lower == 'facebook' %}
+            <a href="{{ link.lien }}" title="facebook social account link"><span class="fa fa-facebook"></span></a>
+        {% elif link.designation|lower == 'twitter' %}
+            <a href="{{ link.lien }}" title="twitter social account link"><span class="fa fa-twitter"></span></a>
+        {% elif link.designation|lower == 'linkedin' %}
+            <a href="{{ link.lien }}" title="linkedin social account link"><span class="fa fa-linkedin"></span></a>
+        {% elif link.designation|lower == 'vimeo' %}
+            <a href="{{ link.lien }}" title="vimeo social account link"><span class="fa fa-vimeo"></span></a>
+        {% endif %} 
+    {% endfor %} 
 {% endblock %}
 <!-- Fin section -->

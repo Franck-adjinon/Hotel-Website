@@ -3,33 +3,29 @@
 
 
 {% block page_title %}
-<title>{{ site_info.app_name }} - Blogs</title>
+  <title>{{ site_info.app_name }} - Blogs</title>
 {% endblock %}
 
 
 {% block meta_description %}
-<meta name="description" content="Hotel gastronomique 5 étoiles">
-{% endblock %}
-
-
+  <meta name="description" content="Suivez nos actualités, événements exclusifs et conseils pour un séjour inoubliable dans notre hôtel 5 étoiles.">
+{% endblock %} 
 
 
 {% block app_name %} 
-  
   {% if site_info %}
     {{ site_info.app_name }}
-  {% endif %}
-    
+  {% endif %} 
 {% endblock %}
 
 
 {% block leadtext %} 
-<h1 class="heading mb-3">Évènements</h1>
-<ul class="custom-breadcrumbs mb-4">
-    <li><a href="#">Accueil</a></li>
+  <h1 class="heading mb-3">Évènements</h1>
+  <ul class="custom-breadcrumbs mb-4">
+    <li><a href="{% url 'index' %}">Accueil</a></li>
     <li>&bullet;</li>
     <li>Évènements</li>
-</ul> 
+  </ul> 
 {% endblock %}
 
 
@@ -38,8 +34,7 @@
     <div class="container"> 
       <div class="row"> 
         {% for Art in page_obj %}
-          <div class="col-lg-4 col-md-6 col-sm-6 col-12 post mb-5" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
-
+          <div class="col-lg-4 col-md-6 col-sm-6 col-12 post mb-5" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00"> 
             <div class="media media-custom d-block mb-4 h-100">
               <a href="{% url 'article_detail' Art.slug %}" class="mb-4 d-block"><img src="{{ Art.cover.url }}" alt="{{ Art.cover_alt_text }}" class="img-fluid"></a>
               <div class="media-body">
@@ -47,40 +42,12 @@
                 <h2 class="mt-0 mb-3"><a href="{% url 'article_detail' Art.slug %}">{{ Art.lead }}</a></h2>
                 <p>{{ Art.content|safe|truncatewords:10 }}</p>
               </div>
-            </div>
-
+            </div> 
           </div>
         {% endfor %}  
-      </div> 
-
-
-
-      <!-- pagination 
-      <div class="row" data-aos="fade">
-        <div class="col-12">
-          <div class="custom-pagination">
-            <ul class="list-unstyled">
-              {% if page_obj.has_previous %}
-                  <li class="active"><span><a href="?page=1">&laquo;</a></span></li>
-                  <li><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li> 
-              {% endif %}
-
-              <li class="active">
-                <span><a href="?page=1">{{ page_obj.number }}</a></span> 
-              </li>
-
-              {% if page_obj.has_next %} 
-                  <li><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
-                  <li class="active"><a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li>
-              {% endif %} 
-            </ul>
-          </div>
-        </div>
-      </div> 
-      --->
-      
-    </div>
-    
+      </div>  
+    </div> 
+    <!-- pagination -->
     <div class="row" data-aos="fade">
       <div class="col-12">
         <div class="custom-pagination">
@@ -88,12 +55,10 @@
             {% if page_obj.has_previous %}
                 <li class="active"><span><a href="?page=1">&laquo;</a></span></li>
                 <li><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li> 
-            {% endif %}
-
+            {% endif %} 
             <li class="active">
               <span><a href="?page=1">{{ page_obj.number }}</a></span> 
-            </li>
-
+            </li> 
             {% if page_obj.has_next %} 
                 <li><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
                 <li class="active"><a href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li>
@@ -103,7 +68,7 @@
       </div>
     </div> 
   </section>
-  {% endblock %}
+{% endblock %}
 
 
 
@@ -116,37 +81,33 @@
 <!-- Fin section -->
 
 <!-- Hotel contact section -->
-{% block hotel_contact%}
-    
-    {% for ct in contacts_site %}
-      {{ct.contact}} <br>
-    {% endfor %}
-      
+{% block hotel_contact%} 
+  {% for ct in contacts_site %}
+    {{ct.contact}} <br>
+  {% endfor %} 
 {% endblock %}
 <!-- Fin section -->
 
 <!-- Hotel mail section -->
 {% block hotel_mail %} 
-{% if site_info %}
-  {{site_info.app_mailadresse}}
-{% endif %}
+  {% if site_info %}
+    {{site_info.app_mailadresse}}
+  {% endif %}
 {% endblock %}
 <!-- Fin section -->
 
 <!-- Hotel lien social section -->
-{% block hotel_links %}
-    
-    {% for link in liens_site %}
-      {% if link.designation|lower == 'facebook' %}
-        <a href="{{ link.lien }}"><span class="fa fa-facebook"></span></a>
-      {% elif link.designation|lower == 'twitter' %}
-        <a href="{{ link.lien }}"><span class="fa fa-twitter"></span></a>
-      {% elif link.designation|lower == 'linkedin' %}
-        <a href="{{ link.lien }}"><span class="fa fa-linkedin"></span></a>
-      {% elif link.designation|lower == 'vimeo' %}
-        <a href="{{ link.lien }}"><span class="fa fa-vimeo"></span></a>
-      {% endif %} 
-    {% endfor %}
-    
+{% block hotel_links %} 
+  {% for link in liens_site %}
+    {% if link.designation|lower == 'facebook' %}
+    <a href="{{ link.lien }}" title="facebook social account link"><span class="fa fa-facebook"></span></a>
+    {% elif link.designation|lower == 'twitter' %}
+    <a href="{{ link.lien }}" title="twitter social account link"><span class="fa fa-twitter"></span></a>
+    {% elif link.designation|lower == 'linkedin' %}
+    <a href="{{ link.lien }}" title="linkedin social account link"><span class="fa fa-linkedin"></span></a>
+    {% elif link.designation|lower == 'vimeo' %}
+    <a href="{{ link.lien }}" title="vimeo social account link"><span class="fa fa-vimeo"></span></a>
+    {% endif %} 
+  {% endfor %} 
 {% endblock %}
 <!-- Fin section -->

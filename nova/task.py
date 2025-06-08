@@ -47,7 +47,7 @@ def send_email_abonne(sujet, from_client, titre_article, contenu):
     def email_task():
         # Récuperer les abonnées à la newsletter actif
         abonner = NewsLetterEmail.objects.filter(actif=True)
-        # Mise en
+        # Mise en forme
         html_content = render_to_string(
             "emails/new_article.html",
             {

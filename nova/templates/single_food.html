@@ -2,30 +2,60 @@
 {% load static %}
 
 
+
 {% block page_title %}
-<title>{{ article.titre }} - Hôtel</title>
+    {% if plats %}
+        <title>{{ site_info.app_name }} - Hôtel - Savourez notre plat {{plats.nom|title}}</title> 
+    {% elif  chambre_x %}
+        {% if chambre_x.type_chambre == 'S' %} 
+            <title>{{ site_info.app_name }} - Hôtel - Découvrez la chambre Simple : confort, élégance et services 5 étoiles pour un séjour inoubliable.</title>
+        {% elif chambre_x.type_chambre == 'F' %} 
+            <title>{{ site_info.app_name }} - Hôtel - Découvrez la chambre familiale : confort, élégance et services 5 étoiles pour un séjour inoubliable.</title>
+        {% elif chambre_x.type_chambre == 'P' %} 
+            <title>{{ site_info.app_name }} - Hôtel - Découvrez la chambre Présidentielle : confort, élégance et services 5 étoiles pour un séjour inoubliable.</title>
+        {% else %}
+            <title>{{ site_info.app_name }} - Hôtel - Explorez nos chambres luxueuses et vivez une expérience 5 étoiles exceptionnelle.</title>
+        {% endif %}
+    {% else %}
+        <title>{{ site_info.app_name }} - Hôtel</title>
+    {% endif %}
 {% endblock %}
+
 
 
 {% block meta_description %}
-<meta name="description" content="Hotel gastronomique 5 étoiles">
-{% endblock %}
-
-
+    {% if plats %}
+        <meta name="description" content="Savourez notre plat {{plats.nom|title}} : une expérience gastronomique raffinée au sein de notre restaurant 5 étoiles."> 
+    {% elif chambre_x %}
+        {% if chambre_x.type_chambre == 'S' %} 
+            <meta name="description" content="Découvrez la chambre Simple : confort, élégance et services 5 étoiles pour un séjour inoubliable.">
+        {% elif chambre_x.type_chambre == 'F' %} 
+            <meta name="description" content="Découvrez la chambre familiale : confort, élégance et services 5 étoiles pour un séjour inoubliable.">
+        {% elif chambre_x.type_chambre == 'P' %} 
+            <meta name="description" content="Découvrez la chambre Présidentielle : confort, élégance et services 5 étoiles pour un séjour inoubliable.">
+        {% else %}
+            <meta name="description" content="Explorez nos chambres luxueuses et vivez une expérience 5 étoiles exceptionnelle.">
+        {% endif %}
+    {% else %}
+        <meta name="description" content="Hôtel 5 étoiles avec chambres haut de gamme, restaurant gastronomique et service irréprochable.">
+    {% endif %}
+{% endblock %} 
 
 
 
 {% block app_name %}  
-  {% if site_info %}
-    {{ site_info.app_name }}
-  {% endif %} 
+    {% if site_info %}
+        {{ site_info.app_name }}
+    {% endif %} 
 {% endblock %}
+
+
 
 {% block leadtext %} 
     {% if plats %}
         <h1 class="heading mb-3">Plats</h1>
         <ul class="custom-breadcrumbs mb-4">
-            <li><a href="#">Accueil</a></li>
+            <li><a href="{% url 'index' %}">Accueil</a></li>
             <li>&bullet;</li>
             <li>Plats</li>
         </ul> 
@@ -33,9 +63,9 @@
     {% if chambre_x %}
         <h1 class="heading mb-3">Chambre</h1>
         <ul class="custom-breadcrumbs mb-4">
-            <li><a href="#">Accueil</a></li>
+            <li><a href="{% url 'index' %}">Accueil</a></li>
             <li>&bullet;</li>
-            <li>Chambre</li>
+            <li><a href="{% url 'chambres' %}">Chambre</a></li>
         </ul> 
     {% endif %}
 {% endblock %}
@@ -100,46 +130,49 @@
 {% endblock %}
 
 
-    <!-- Hotel adress section -->
-    {% block hotel_adress %} 
-      {% if site_info %}
-        {{site_info.app_adresse}}
-      {% endif %}
-    {% endblock %}
-    <!-- Fin section -->
-    
-    <!-- Hotel contact section -->
-    {% block hotel_contact%}
-        
-        {% for ct in contacts_site %}
-          {{ct.contact}} <br>
-        {% endfor %}
-          
-    {% endblock %}
-    <!-- Fin section -->
-    
-    <!-- Hotel mail section -->
-    {% block hotel_mail %} 
+
+<!-- Hotel adress section -->
+{% block hotel_adress %} 
     {% if site_info %}
-      {{site_info.app_mailadresse}}
+        {{site_info.app_adresse}}
     {% endif %}
-    {% endblock %}
-    <!-- Fin section -->
-    
-    <!-- Hotel lien social section -->
-    {% block hotel_links %}
-        
-        {% for link in liens_site %}
-          {% if link.designation|lower == 'facebook' %}
+{% endblock %}
+<!-- Fin section -->
+
+
+
+<!-- Hotel contact section -->
+{% block hotel_contact%} 
+    {% for ct in contacts_site %}
+        {{ct.contact}} <br>
+    {% endfor %} 
+{% endblock %}
+<!-- Fin section -->
+
+
+
+<!-- Hotel mail section -->
+{% block hotel_mail %} 
+    {% if site_info %}
+        {{site_info.app_mailadresse}}
+    {% endif %}
+{% endblock %}
+<!-- Fin section -->
+
+
+
+<!-- Hotel lien social section -->
+{% block hotel_links %} 
+    {% for link in liens_site %}
+        {% if link.designation|lower == 'facebook' %}
             <a href="{{ link.lien }}"><span class="fa fa-facebook"></span></a>
-          {% elif link.designation|lower == 'twitter' %}
+        {% elif link.designation|lower == 'twitter' %}
             <a href="{{ link.lien }}"><span class="fa fa-twitter"></span></a>
-          {% elif link.designation|lower == 'linkedin' %}
+        {% elif link.designation|lower == 'linkedin' %}
             <a href="{{ link.lien }}"><span class="fa fa-linkedin"></span></a>
-          {% elif link.designation|lower == 'vimeo' %}
+        {% elif link.designation|lower == 'vimeo' %}
             <a href="{{ link.lien }}"><span class="fa fa-vimeo"></span></a>
-          {% endif %} 
-        {% endfor %}
-        
-    {% endblock %}
-    <!-- Fin section -->
+        {% endif %} 
+    {% endfor %} 
+{% endblock %}
+<!-- Fin section -->

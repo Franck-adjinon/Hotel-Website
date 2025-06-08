@@ -3,12 +3,12 @@
 
 
 {% block page_title %}
-<title>{{ site_info.app_name }} - Réservation</title>
+  <title>{{ site_info.app_name }} - Réservation</title>
 {% endblock %}
 
 
 {% block meta_description %}
-<meta name="description" content="Hotel gastronomique 5 étoiles">
+  <meta name="description" content="Réservez facilement votre séjour dans notre hôtel 5 étoiles : choisissez vos dates, chambres et options en quelques clics.">
 {% endblock %}
 
 
@@ -23,175 +23,168 @@
 
 
 {% block leadtext %} 
-<h1 class="heading mb-3">Formulaire de réservation</h1>
-<ul class="custom-breadcrumbs mb-4">
-    <li><a href="#">Accueil</a></li>
+  <h1 class="heading mb-3">Formulaire de réservation</h1>
+  <ul class="custom-breadcrumbs mb-4">
+    <li><a href="{% url 'index' %}">Accueil</a></li>
     <li>&bullet;</li>
     <li>réservation</li>
-</ul> 
+  </ul> 
 {% endblock %}
 
 
 {% block Reservationpage_section %}
-    <section class="section contact-section" id="next">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
-            
-            <form action="{% url 'take_reservation' %}" method="post" class="bg-white p-md-5 p-4 mb-5 border">
-              {% csrf_token %}
-              {% if messages %} 
-                  <ul>
-                      {% for message in messages %}
-                        <li class="{{ message.tags }}">{{ message }}</li>
-                      {% endfor %}
-                  </ul> 
-					    {% endif %}
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="name">Nom Complet</label>
-                  <input type="text" id="name" name="full_name" class="form-control ">
-                </div>
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="phone">Contact</label>
-                  <input type="text" id="phone" name="contact" class="form-control ">
-                </div>
-              </div>
+  <section class="section contact-section" id="next">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
           
-              <div class="row">
-                <div class="col-md-12 form-group">
-                  <label class="text-black font-weight-bold" for="email">Email</label>
-                  <input type="email" id="email" name="email" class="form-control ">
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="checkin_date">Date d'arrivée</label>
-                  <input type="text" id="checkin_date" name="date_arrivee" class="form-control">
-                </div>
-                <div class="col-md-6 form-group">
-                  <label class="text-black font-weight-bold" for="checkout_date">Date de départ</label>
-                  <input type="text" id="checkout_date" name="date_depart" class="form-control">
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <label for="adults" class="font-weight-bold text-black">Adultes</label>
-                  <div class="field-icon-wrap"> 
-                    <input type="number" name="nombre_adulte" id="adults" class="form-control" required>
-                  </div>
-                </div>
-                <div class="col-md-6 form-group">
-                  <label for="children" class="font-weight-bold text-black">Enfants</label>
-                  <div class="field-icon-wrap"> 
-                    <input type="number" name="nombre_enfant" id="children" class="form-control" required> 
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-4">
-                <div class="col-md-12 form-group">
-                  <label class="text-black font-weight-bold" for="message">Notes</label>
-                  <textarea name="message" id="message" class="form-control " cols="30" rows="8"></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="submit" value="Réservez maintenant" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
-                </div>
-              </div>
-            </form>
-
-          </div>
-          <div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
+          <form action="{% url 'reservation' %}" method="post" class="bg-white p-md-5 p-4 mb-5 border">
+            {% csrf_token %} 
+            {{ form.non_field_errors }}
             <div class="row">
-              <div class="col-md-10 ml-auto contact-info">
-                <p><span class="d-block">Adresse:</span> <span class="text-black"> {{site_info.app_adresse}}</span></p>
-                <p><span class="d-block">Contact:</span> 
-                  <span class="text-black"> 
-                    {% for ct in contacts_site %}
-                      {{ct.contact}} <br>
-                    {% endfor %}
-                  </span>
-                </p>
-                <p><span class="d-block">Email:</span> <span class="text-black"> {{site_info.app_mailadresse}}</span></p>
+              <div class="col-md-6 form-group">
+                {{ form.full_name.errors }} 
+                <label class="text-black font-weight-bold" for="{{ form.full_name.id_for_label }}">Nom Complet</label> 
+                {{ form.full_name }}  
               </div>
+              <div class="col-md-6 form-group">
+                {{ form.contact.errors }} 
+                <label class="text-black font-weight-bold" for="{{ form.contact.id_for_label }}">Contact</label>
+                {{ form.contact }}  
+              </div>
+            </div>
+        
+            <div class="row">
+              <div class="col-md-12 form-group">
+                {{ form.email.errors }} 
+                <label class="text-black font-weight-bold" for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }} 
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                {{ form.datearrivee.errors }} 
+                <label class="text-black font-weight-bold" for="{{ form.datearrivee.id_for_label }}">Date d'arrivée</label>
+                {{ form.datearrivee }}  
+              </div>
+              <div class="col-md-6 form-group">
+                {{ form.datedepart.errors }} 
+                <label class="text-black font-weight-bold" for="{{ form.datedepart.id_for_label }}">Date de départ</label>
+                {{ form.datedepart }}  
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                {{ form.adultes.errors }} 
+                <label for="{{ form.adultes.id_for_label }}" class="font-weight-bold text-black">Adultes</label>
+                <div class="field-icon-wrap"> 
+                  {{ form.adultes }}  
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                {{ form.enfants.errors }} 
+                <label for="{{ form.enfants.id_for_label }}" class="font-weight-bold text-black">Enfants</label>
+                <div class="field-icon-wrap"> 
+                  {{ form.enfants }}  
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-12 form-group">
+                {{ form.message.errors }} 
+                <label class="text-black font-weight-bold" for="{{ form.message.id_for_label }}">Notes</label>
+                {{ form.message }}  
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="submit" value="Réservez maintenant" class="btn btn-primary text-white py-3 px-5 font-weight-bold">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
+          <div class="row">
+            <div class="col-md-10 ml-auto contact-info">
+              <p><span class="d-block">Adresse:</span> <span class="text-black"> {{site_info.app_adresse}}</span></p>
+              <p><span class="d-block">Contact:</span> 
+                <span class="text-black"> 
+                  {% for ct in contacts_site %}
+                    {{ct.contact}} <br>
+                  {% endfor %}
+                </span>
+              </p>
+              <p><span class="d-block">Email:</span> <span class="text-black"> {{site_info.app_mailadresse}}</span></p>
             </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="section testimonial-section bg-light">
-      <div class="container">
-        <div class="row justify-content-center text-center mb-5">
-          <div class="col-md-7">
-            <h2 class="heading" data-aos="fade-up">Témoignages</h2>
-          </div>
+    </div>
+  </section> 
+  <section class="section testimonial-section bg-light">
+    <div class="container">
+      <div class="row justify-content-center text-center mb-5">
+        <div class="col-md-7">
+          <h2 class="heading" data-aos="fade-up">Témoignages</h2>
         </div>
-        <div class="row">
-          <div class="js-carousel-2 owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
-            {% for tem in temoignages %}
-              <div class="testimonial text-center slider-item">
-                <div class="author-image mb-3">
-                  <img src="{{tem.image.url}}" alt="Image du client {{tem.nom_prenom}}" class="rounded-circle mx-auto">
-                </div>
-                <blockquote> 
-                  <p>&ldquo; {{tem.temoignage}} &rdquo;</p>
-                </blockquote>
-                <p><em>{{tem.nom_prenom}} </em></p>
-              </div> 
-            {% endfor %} 
-          </div>
-            <!-- END slider -->
-        </div>
-
       </div>
-    </section>
+      <div class="row">
+        <div class="js-carousel-2 owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
+          {% for tem in temoignages %}
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="{{tem.image.url}}" alt="Image du client {{tem.nom_prenom}}" class="rounded-circle mx-auto">
+              </div>
+              <blockquote> 
+                <p>&ldquo; {{tem.temoignage}} &rdquo;</p>
+              </blockquote>
+              <p><em>{{tem.nom_prenom}} </em></p>
+            </div> 
+          {% endfor %} 
+        </div>
+          <!-- END slider -->
+      </div> 
+    </div>
+  </section>
 {% endblock %}
 
 
-    <!-- Hotel adress section -->
-    {% block hotel_adress %} 
-      {% if site_info %}
-        {{site_info.app_adresse}}
-      {% endif %}
-    {% endblock %}
-    <!-- Fin section -->
-    
-    <!-- Hotel contact section -->
-    {% block hotel_contact%}
-        
-        {% for ct in contacts_site %}
-          {{ct.contact}} <br>
-        {% endfor %}
-          
-    {% endblock %}
-    <!-- Fin section -->
-    
-    <!-- Hotel mail section -->
-    {% block hotel_mail %} 
-    {% if site_info %}
-      {{site_info.app_mailadresse}}
-    {% endif %}
-    {% endblock %}
-    <!-- Fin section -->
-    
-    <!-- Hotel lien social section -->
-    {% block hotel_links %}
-        
-        {% for link in liens_site %}
-          {% if link.designation|lower == 'facebook' %}
-            <a href="{{ link.lien }}"><span class="fa fa-facebook"></span></a>
-          {% elif link.designation|lower == 'twitter' %}
-            <a href="{{ link.lien }}"><span class="fa fa-twitter"></span></a>
-          {% elif link.designation|lower == 'linkedin' %}
-            <a href="{{ link.lien }}"><span class="fa fa-linkedin"></span></a>
-          {% elif link.designation|lower == 'vimeo' %}
-            <a href="{{ link.lien }}"><span class="fa fa-vimeo"></span></a>
-          {% endif %} 
-        {% endfor %}
-        
-    {% endblock %}
-    <!-- Fin section -->
+<!-- Hotel adress section -->
+{% block hotel_adress %} 
+  {% if site_info %}
+    {{site_info.app_adresse}}
+  {% endif %}
+{% endblock %}
+<!-- Fin section -->
+
+<!-- Hotel contact section -->
+{% block hotel_contact%} 
+  {% for ct in contacts_site %}
+    {{ct.contact}} <br>
+  {% endfor %} 
+{% endblock %}
+<!-- Fin section -->
+
+<!-- Hotel mail section -->
+{% block hotel_mail %} 
+  {% if site_info %}
+    {{site_info.app_mailadresse}}
+  {% endif %}
+{% endblock %}
+<!-- Fin section -->
+
+<!-- Hotel lien social section -->
+{% block hotel_links %} 
+  {% for link in liens_site %}
+    {% if link.designation|lower == 'facebook' %}
+    <a href="{{ link.lien }}" title="facebook social account link"><span class="fa fa-facebook"></span></a>
+    {% elif link.designation|lower == 'twitter' %}
+    <a href="{{ link.lien }}" title="twitter social account link"><span class="fa fa-twitter"></span></a>
+    {% elif link.designation|lower == 'linkedin' %}
+    <a href="{{ link.lien }}" title="linkedin social account link"><span class="fa fa-linkedin"></span></a>
+    {% elif link.designation|lower == 'vimeo' %}
+    <a href="{{ link.lien }}" title="vimeo social account link"><span class="fa fa-vimeo"></span></a>
+    {% endif %} 
+  {% endfor %} 
+{% endblock %}
+<!-- Fin section -->

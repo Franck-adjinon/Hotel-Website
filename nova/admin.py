@@ -1,5 +1,4 @@
-from django.contrib import admin
-from django.contrib import admin as django_admin
+from django.contrib import admin 
 
 # Import de 'admin' de unfold
 from unfold.admin import ModelAdmin, StackedInline
@@ -17,10 +16,9 @@ from django.utils.translation import gettext_lazy as _
 from unfold.contrib.filters.admin import (
     FieldTextFilter,
     RangeDateFilter,
-    ChoicesCheckboxFilter,
-    RelatedDropdownFilter,
+    ChoicesCheckboxFilter, 
     BooleanRadioFilter,
-    SliderNumericFilter,
+    SliderNumericFilter, 
 )
 
 # Import pour améliorer la gestion du texte enrichi dans l'interface d'administration Django
@@ -42,7 +40,8 @@ from .models import (
     HotelInfo,
     Article,
 )
-from django.db import models
+from django.db import models 
+from django.db.models import TextChoices
 
 # unfold paginator
 from unfold.paginator import InfinitePaginator
@@ -58,6 +57,22 @@ from unfold.contrib.import_export.forms import (
     ImportForm,
     SelectableFieldsExportForm,
 )
+from unfold.sections import TableSection, TemplateSection
+
+# Pour utiliser les décorateurs de unfold
+from unfold.decorators import display
+
+
+# ? configuration du filtres numerique
+class PriceNumericFilter(SliderNumericFilter):
+    MAX_DECIMALS = 2
+    STEP = 10
+
+
+#
+class ElementStatus(TextChoices):
+    ACTIVE = "OUI", _("Oui")
+    INACTIVE = "NON", _("Non")
 
 
 @admin.register(User)
@@ -85,6 +100,42 @@ class ArticleAdmin(ModelAdmin):
         }
     }
 
+    fieldsets = (
+        (
+            _("Titre & status"),
+            {
+                "classes": ["tab"],
+                "fields": [
+                    "status",
+                    "titre",
+                    "slug",
+                    "lead",
+                ],
+            },
+        ),
+        (
+            _("Contenu principal"),
+            {
+                "classes": ["tab"],
+                "fields": [
+                    "content",
+                ],
+            },
+        ),
+        (
+            _("Images"),
+            {
+                "classes": ["tab"],
+                "fields": [
+                    "cover",
+                    "cover_alt_text",
+                    "image",
+                    "image_alt_text",
+                ],
+            },
+        ),
+    )
+
     list_display = ("titre", "publish", "create_date")
     prepopulated_fields = {
         "slug": ("titre",)
@@ -99,9 +150,13 @@ class ArticleAdmin(ModelAdmin):
         "date_creation",
     ]
 
-    @admin.display(
+    @display(
         ordering="status",
         description="Publier ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def publish(self, obj):
         if obj.status == True:
@@ -180,9 +235,13 @@ class testimonyAdmin(ModelAdmin):
     def name(self, obj):
         return obj.nom_prenom
 
-    @admin.display(
+    @display(
         ordering="visible",
         description="Visible ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def publish(self, obj):
         if obj.visible == True:
@@ -251,9 +310,13 @@ class NewsLetterEmailAdmin(ModelAdmin):
         ("actif", BooleanRadioFilter),
     ]
 
-    @admin.display(
+    @display(
         ordering="actif",
         description="Actif ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def status(self, obj):
         if obj.actif == True:
@@ -324,9 +387,13 @@ class platAdmin(ModelAdmin):
         ("date_creation", RangeDateFilter),
     ]
 
-    @admin.display(
+    @display(
         ordering="status",
         description="Visible ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def actif(self, obj):
         if obj.status == True:
@@ -361,9 +428,13 @@ class ServiceclientAdmin(ModelAdmin):
         ("date_creation", RangeDateFilter),
     ]
 
-    @admin.display(
+    @display(
         ordering="pinned",
         description="Épingler ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def pin(self, obj):
         if obj.pinned == True:
@@ -371,9 +442,13 @@ class ServiceclientAdmin(ModelAdmin):
         else:
             return "NON"
 
-    @admin.display(
+    @display(
         ordering="actif",
         description="Actif ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def status(self, obj):
         if obj.actif == True:
@@ -415,16 +490,11 @@ class EmailSendAdmin(ModelAdmin):
     show_full_result_count = False
 
 
-# TODO : Gestion des chambres & configuration ramètrages du filtres
-class PriceNumericFilter(SliderNumericFilter):
-    MAX_DECIMALS = 2
-    STEP = 10
-
-
+# TODO : Gestion des chambres
 @admin.register(chambre)
 class chambreAdmin(ModelAdmin):
-    list_display = ("room", "price", "nb_lit", "pin", "status", "create_date") 
-
+    list_display = ("numero", "room", "price", "nb_lit", "pin", "status", "create_date") 
+    search_fields = ["numero_chambre"]
     # ajout de filtrage à l’aide de l’attribut list_filter
     list_filter_submit = True  # Bouton de soumission en bas du filtre
     list_filter = [
@@ -434,6 +504,13 @@ class chambreAdmin(ModelAdmin):
         ("is_best", BooleanRadioFilter),
         ("date_creation", RangeDateFilter),
     ]
+
+    @admin.display(
+        ordering="numero_chambre",
+        description="Numéro",
+    )
+    def numero(self, obj):
+        return obj.numero_chambre
 
     @admin.display(
         ordering="prix_nuit",
@@ -456,9 +533,13 @@ class chambreAdmin(ModelAdmin):
     def nb_lit(self, obj):
         return obj.nombre_lit
 
-    @admin.display(
+    @display(
         ordering="libre",
         description="Libre ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def pin(self, obj):
         if obj.libre == True:
@@ -466,9 +547,13 @@ class chambreAdmin(ModelAdmin):
         else:
             return "NON"
 
-    @admin.display(
+    @display(
         ordering="is_best",
         description="Meilleur offre ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def status(self, obj):
         if obj.is_best == True:
@@ -503,6 +588,7 @@ class chambreAdmin(ModelAdmin):
 @admin.register(reservation_chambre)
 class reservation_chambreAdmin(ModelAdmin): 
     list_display = (
+        "numero",
         "room",
         "name",
         "contact",
@@ -525,6 +611,13 @@ class reservation_chambreAdmin(ModelAdmin):
         ("is_finish", BooleanRadioFilter),
         ("date_creation", RangeDateFilter),
     ]
+
+    @admin.display(
+        ordering="id_chambre",
+        description="Numéro",
+    )
+    def numero(self, obj):
+        return obj.id_chambre.numero_chambre
 
     @admin.display(
         ordering="nom",
@@ -568,9 +661,13 @@ class reservation_chambreAdmin(ModelAdmin):
     def create_date(self, obj):
         return obj.date_creation
 
-    @admin.display(
+    @display(
         ordering="is_finish",
         description="Terminer ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def status(self, obj):
         if obj.is_finish == True:
@@ -662,9 +759,13 @@ class reservationAdmin(ModelAdmin):
     def create_date(self, obj):
         return obj.date_creation
 
-    @admin.display(
+    @display(
         ordering="is_confirm",
         description="Confirmer ?",
+        label={
+            ElementStatus.ACTIVE: "success",  # green
+            ElementStatus.INACTIVE: "danger",  # red
+        },
     )
     def status(self, obj):
         if obj.is_confirm == True:

@@ -4,12 +4,12 @@
 
 
 {% block page_Title %}
-<title>{{ site_info.app_name }} - Merci</title>
+  <title>{{ site_info.app_name }} - Merci</title>
 {% endblock %}
 
 
 {% block meta_description %}
-<meta name="description" content="Hotel gastronomique 5 étoiles">
+  <meta name="description" content="Merci pour votre confiance !">
 {% endblock %}
 
 
@@ -21,14 +21,14 @@
 
 
 {% block leadtext %} 
-<h1 class="heading mb-3">
+  <h1 class="heading mb-3">
     {{new_subscriber_text_intro}}
-</h1>
-<ul class="custom-breadcrumbs mb-4">
+  </h1>
+  <ul class="custom-breadcrumbs mb-4">
     <li> 
-        {{new_subscriber_text_content}}
+      {{new_subscriber_text_content}}
     </li>
-</ul>
+  </ul>
 {% endblock %} 
 
 
@@ -41,37 +41,33 @@
 <!-- Fin section -->
 
 <!-- Hotel contact section -->
-{% block hotel_contact%}
-    
-    {% for ct in contacts_site %}
-      {{ct.contact}} <br>
-    {% endfor %}
-      
+{% block hotel_contact%} 
+  {% for ct in contacts_site %}
+    {{ct.contact}} <br>
+  {% endfor %} 
 {% endblock %}
 <!-- Fin section -->
 
 <!-- Hotel mail section -->
 {% block hotel_mail %} 
-{% if site_info %}
-  {{site_info.app_mailadresse}}
-{% endif %}
+  {% if site_info %}
+    {{site_info.app_mailadresse}}
+  {% endif %}
 {% endblock %}
 <!-- Fin section -->
 
 <!-- Hotel lien social section -->
-{% block hotel_links %}
-    
-    {% for link in liens_site %}
-      {% if link.designation|lower == 'facebook' %}
-        <a href="{{ link.lien }}"><span class="fa fa-facebook"></span></a>
-      {% elif link.designation|lower == 'twitter' %}
-        <a href="{{ link.lien }}"><span class="fa fa-twitter"></span></a>
-      {% elif link.designation|lower == 'linkedin' %}
-        <a href="{{ link.lien }}"><span class="fa fa-linkedin"></span></a>
-      {% elif link.designation|lower == 'vimeo' %}
-        <a href="{{ link.lien }}"><span class="fa fa-vimeo"></span></a>
-      {% endif %} 
-    {% endfor %}
-    
+{% block hotel_links %} 
+  {% for link in liens_site %}
+    {% if link.designation|lower == 'facebook' %}
+      <a href="{{ link.lien }}"><span class="fa fa-facebook"></span></a>
+    {% elif link.designation|lower == 'twitter' %}
+      <a href="{{ link.lien }}"><span class="fa fa-twitter"></span></a>
+    {% elif link.designation|lower == 'linkedin' %}
+      <a href="{{ link.lien }}"><span class="fa fa-linkedin"></span></a>
+    {% elif link.designation|lower == 'vimeo' %}
+      <a href="{{ link.lien }}"><span class="fa fa-vimeo"></span></a>
+    {% endif %} 
+  {% endfor %} 
 {% endblock %}
 <!-- Fin section -->

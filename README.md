@@ -60,46 +60,46 @@ EMAIL_USE_TLS=True
 ```
 
 - Voici le modèle conceptuel de données dont décris la structure de la base de données:
-  ![MCD](nova/static/docs/MCD.png)
+  ![MCD](docs/MCD.png)
 
 ---
 
 ## 🖼️ Aperçu du site
 
 - **Accueil**
-  ![Accueil](nova/static/docs/home_1.png)
+  ![Accueil](docs/home_1.png)
 
 - **Chambres**
-  ![Chambres](nova/static/docs/rooms_1.png)
+  ![Chambres](docs/rooms_1.png)
 
 - **About**
-  ![About](nova/static/docs/about_1.png)
+  ![About](docs/about_1.png)
 
 - **Blog**
-  ![Blog](nova/static/docs/blog_1.png)
+  ![Blog](docs/blog_1.png)
 
 - **Contact**
-  ![Blog](nova/static/docs/contact_1.png)
+  ![Blog](docs/contact_1.png)
 
 - **Reservation**
-  ![Reservation](nova/static/docs/reservation_1.png)
+  ![Reservation](docs/reservation_1.png)
 
 ### Section d’administration
 
 - **Articles**  
-  ![Article](nova/static/docs/article_1.png)
+  ![Article](docs/article_1.png)
 
 - **Chambres**  
-  ![Chambre](nova/static/docs/rooms_1.png)
+  ![Chambre](docs/rooms_1.png)
 
 - **Témoignages**  
-  ![Témoignage](nova/static/docs/testimony.png)
+  ![Témoignage](docs/testimony.png)
 
 - **Réservations**  
-  ![Réservation](nova/static/docs/reservation_3.png)
+  ![Réservation](docs/reservation_3.png)
 
 - **Galerie**  
-  ![Galerie](nova/static/docs/Gallerie_1.png)
+  ![Galerie](docs/Gallerie_1.png)
 
 ---
 

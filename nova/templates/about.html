@@ -46,7 +46,7 @@
             textes
             aveugles. Séparés, ils vivent à Bookmarksgrove, juste au bord de la Sémantique, un vaste océan de langues.
           </p>
-          <p><a href="#" class="btn btn-primary text-white py-2 mr-3">Nos Chambres</a> <span class="mr-3 font-family-serif"></p>
+          <p><a href="{% url 'chambres' %}" class="btn btn-primary text-white py-2 mr-3">Nos Chambres</a> <span class="mr-3 font-family-serif"></p>
         </div>
         
       </div>
@@ -64,22 +64,22 @@
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00">
           <div class="block-2">
             <div class="flipper">
-              <div class="front" style="background-image: url({{Leader.image.url}});">
+              <div class="front" style="background-image: url({{ Leader.image.url }});">
                 <div class="box">
-                  <h2>{{Leader.nom_complet}}</h2>
-                  <p>{{Leader.role}}</p>
+                  <h2>{{ Leader.nom_complet }}</h2>
+                  <p>{{ Leader.role }}</p>
                 </div>
               </div>
               <div class="back">
                 <!-- back content -->
                 <blockquote>
-                  <p>&ldquo;{{Leader.description}}&rdquo;</p>
+                  <p>&ldquo;{{ Leader.description }}&rdquo;</p>
                 </blockquote>
                 <div class="author d-flex">
                   <div class="image mr-3 align-self-center">
-                    <img src="{{Leader.image.url}}" alt="{{Leader.image_alt_text}}">
+                    <img src="{{ Leader.image.url }}" alt="{{ Leader.image_alt_text }}">
                   </div>
-                  <div class="name align-self-center">{{Leader.nom_complet}}<span class="position">{{Leader.role}}</span></div>
+                  <div class="name align-self-center">{{ Leader.nom_complet }}<span class="position">{{ Leader.role }}</span></div>
                 </div>
               </div>
             </div>
@@ -107,7 +107,7 @@
           <div class="home-slider major-caousel owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
             {% for pict in pictures %}  
               <div class="slider-item">
-                <a href="{{pict.image.url}}" data-fancybox="images" data-caption="{{pict.titre}}"><img src="{{pict.image.url}}" alt="{{pict.titre}}" class="img-fluid"></a>
+                <a href="{{ pict.image.url }}" data-fancybox="images" data-caption="{{ pict.titre }}"><img src="{{ pict.image.url }}" alt="{{ pict.titre }}" class="img-fluid"></a>
               </div>
             {% endfor %}  
           </div>
@@ -165,7 +165,7 @@
 <!-- Hotel adress section -->
 {% block hotel_adress %} 
   {% if site_info %}
-    {{site_info.app_adresse}}
+    {{ site_info.app_adresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->
@@ -173,7 +173,7 @@
 <!-- Hotel contact section -->
 {% block hotel_contact%} 
   {% for ct in contacts_site %}
-    {{ct.contact}} <br>
+    {{ ct.contact }} <br>
   {% endfor %} 
 {% endblock %}
 <!-- Fin section -->
@@ -181,7 +181,7 @@
 <!-- Hotel mail section -->
 {% block hotel_mail %} 
   {% if site_info %}
-    {{site_info.app_mailadresse}}
+    {{ site_info.app_mailadresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->

@@ -2,31 +2,31 @@
 
 # Hôtel Nova
 
-Ce projet est un petit site web de démonstration réalisé avec Django. Il représente le site du **Hôtel Nova**, conçu pour m’exercer à Django et aux bases du développement web.
+**Nova Hotel** is a fictional website project developed with Django. It simulates a hotel's storefront with classic features: room presentation, reservations, contact information, etc.
 
-## 🌟 Fonctionnalités
+## 🌟 Features
 
-- [x] Affichage des **chambres de l'hôtel**
-- [x] Présentation des **menus** et **plats offerts**
-- [x] Section **A propos** présentant l'histoire et les responsables de l'hôtel
-- [x] Section **blog** avec des articles culinaires publiés par l'hôtel
-- [x] **Formulaire de contact** pour que les visiteurs puissent écrire à l'hôtel
-- [x] **Abonnement à la newsletter** : les abonnés reçoivent un email à chaque publication d’un nouvel article
-- [x] **Formulaire de réservation** : pour que les visiteurs puissent effectuer les réservations
-- [x] Après l'envoi d'un message via le formulaire de contact par un visiteur les **agents du service client** reçoivent un email avec les informations du client et sa requête
-- [x] Après la publication d'un article les abonnés reçoivent un email avec les informations du nouvel article
-- [ ] Pas de système d’**inscription** ni **authentification**
-- [ ] Pas de **likes**, **commentaires**, ni de **statistiques de vues** pour les articles
+- [x] Showing **hotel rooms**
+- [x] Presentation of the **menus** and **dishes offered**
+- [x] **About** section presenting the history and management of the hotel
+- [x] **Blog** section with culinary articles published by the hotel
+- [x] **Contact form** for visitors to write to the hotel
+- [x] **Newsletter subscription**: subscribers receive an email each time a new article is published
+- [x] **Reservation form**: for visitors to make reservations
+- [x] After a visitor sends a message via the contact form, **customer service agents** receive an email with the guest's information and their request
+- [x] After an article is published, subscribers receive an email with information about the new article.
+- [ ] No **registration** or **authentication** system.
+- [ ] No **likes**, **comments**, or **view statistics** for articles.
 
 ---
 
-## 🛠️ Technologies utilisées
+## 🛠️ Technologies used
 
 - Python / Django
 - HTML / CSS
 - Bootstrap
-- SQLite (ou la base de données par défaut de Django)
-- Django admin + package unfold pour la gestion interne
+- SQLite 
+- Django admin + unfold package for internal management
 
 ---
 
@@ -46,9 +46,9 @@ python manage.py runserver
 
 ## 🚀 Utilisation
 
-Une fois le projet installé (voir section [Installation](#installation)), voici comment l'utiliser :
+Once the project is installed (see section [Installation](#installation)), Here's how to use it :
 
-- Crée un fichier d'environnement dans la racine du projet et remplissez le avec les informations nécessaires à la gestion des envoie de mail avec Django à savoir:
+- Create an environment file in the project root and fill it with the information needed to manage email sending with Django, namely:
 
 ```bash
 EMAIL_HOST_USER=votremail@gmail.com
@@ -59,17 +59,22 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 ```
 
-- Voici le modèle conceptuel de données dont décris la structure de la base de données:
+⚠️ **Important:** Once the database is created with `python manage.py migrate`, you will need to **manually add data** (rooms, articles, testimonials, etc.) via the Django admin interface (`/admin`) so that the site pages display correctly.
+
+You can also add some data by creating objects directly in the code or by importing a fixtures file if available.
+
+
+- This is the conceptual data model that describes the structure of the database.:
   ![MCD](docs/MCD.png)
 
 ---
 
-## 🖼️ Aperçu du site
+## 🖼️ Site Overview
 
-- **Accueil**
+- **Home**
   ![Accueil](docs/home_1.png)
 
-- **Chambres**
+- **Rooms**
   ![Chambres](docs/rooms_1.png)
 
 - **About**
@@ -84,18 +89,18 @@ EMAIL_USE_TLS=True
 - **Reservation**
   ![Reservation](docs/reservation_1.png)
 
-### Section d’administration
+### Administration Section
 
 - **Articles**  
   ![Article](docs/article_1.png)
 
-- **Chambres**  
+- **Rooms**  
   ![Chambre](docs/rooms_1.png)
 
-- **Témoignages**  
+- **Testimonials**  
   ![Témoignage](docs/testimony.png)
 
-- **Réservations**  
+- **Reservations**  
   ![Réservation](docs/reservation_3.png)
 
 - **Galerie**  
@@ -103,40 +108,38 @@ EMAIL_USE_TLS=True
 
 ---
 
-## 🤝 Contribuer
+## 🤝 Contribute
 
-Les contributions sont les bienvenues ! Si vous souhaitez aider à améliorer ce projet, voici comment vous pouvez contribuer :
+Contributions are welcome! If you'd like to help improve this project, here's how you can contribute:
 
-1. 🍴 Forkez le projet
-2. 📥 Clonez votre fork localement
-3. 🔧 Créez une branche avec un nom explicite (`git checkout -b correction-typo` par exemple)
-4. 💡 Apportez vos modifications
-5. ✅ Assurez-vous que tout fonctionne correctement
-6. 📤 Poussez vos changements et ouvrez une **pull request** claire
+1. 🍴 Fork the project
+2. 📥 Clone your fork locally
+3. 🔧 Create a branch with a meaningful name (e.g., `git checkout -b correction-typo`)
+4. 💡 Make your changes
+5. ✅ Make sure everything works correctly
+6. 📤 Push your changes and open a clear **pull request**
 
 ---
 
 ## 🐛 Trouvé un bug ?
 
-Si vous trouvez un bug ou un comportement inattendu, vous pouvez :
+If you find a bug or unexpected behavior, you can:
 
-- 📩 Créer une _issue_ sur [GitHub](https://github.com/Franck-adjinon/Hotel-Website.git/issues)
-- 🔧 Soumettre une _pull request_ avec une proposition de correction
-- 💬 Ou simplement me contacter via [email](mailto:franckadjinon@gmail.com)
+- 📩 Create an issue on [GitHub](https://github.com/Franck-adjinon/Hotel-Website.git/issues)
+- 🔧 Submit a pull request with a proposed fix
+- 💬 Or simply contact me via [email](mailto:franckadjinon@gmail.com)
 
 ---
 
 ## 📄 Licence
 
-Ce projet est un logiciel open source distribué sous la licence **MIT**.  
-Vous êtes libre de l'utiliser, le modifier et le distribuer, à condition de conserver les mentions de droits d’auteur et la licence d’origine.
+This project is open source software distributed under the **MIT** License.
+You are free to use, modify, and distribute it, provided you retain the original copyright notices and license.
 
-Voir le fichier [LICENSE](./LICENSE) pour plus d'informations.
+See the [LICENSE](./LICENSE) file for more information.
 
 ---
 
-## 🙏 Crédits
+## 🙏 Credits
 
-Design réaliser par [Colorlib](https://colorlib.com/)
-
-Merci pour votre contribution à l'amélioration du projet !
+Design by [Colorlib](https://colorlib.com/) 

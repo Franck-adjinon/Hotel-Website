@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from .base import *
+load_dotenv()
 
 # import dans le cadre de la gestion des paramètres du package unfold
 from django.templatetags.static import static
@@ -8,30 +10,36 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-4y-i$h9&!71n1(uqvgkt%r%6-(d7*=$gqubje+v_zb5-bfrz97"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = [
-    "9b9a-2c0f-f0f8-606-fd00-cda-2817-fec-f723.ngrok-free.app",
-    "127.0.0.1",
-]
-CSRF_TRUSTED_ORIGINS = [
-    "https://9b9a-2c0f-f0f8-606-fd00-cda-2817-fec-f723.ngrok-free.app",
+    host.strip()
+    for host in os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
+    if host.strip()
 ]
 
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
+#
+LOGS_DIR = BASE_DIR / "logs"
+LOGS_DIR.mkdir(exist_ok=True)  # Crée automatiquement le dossier logs
+
+# Détermine le niveau de logs selon DEBUG
+DEFAULT_LOG_LEVEL = "DEBUG" if DEBUG else "INFO"
 
 # Application definition
-
 INSTALLED_APPS = [
     # Ajout des apps relatif à unfold
     "unfold",  # before django.contrib.admin
@@ -83,20 +91,20 @@ TEMPLATES = [
 WSGI_APPLICATION = "novaproject.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# Database 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_HOST"),
+        "PORT": os.getenv("POSTGRES_PORT", 5432),
     }
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
+# Password validation 
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -113,9 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
+# Internationalization 
 LANGUAGE_CODE = "fr"
 
 TIME_ZONE = "UTC"
@@ -131,18 +137,16 @@ LANGUAGES = (
 )
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "static/"
-# le chemin du dossier Static
+# Gestion des fichiers static 
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "novaproject/static"),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+# Default primary key field type 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Gestion des fichiers média
@@ -153,53 +157,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Configuration du système de logging
 from logging.handlers import RotatingFileHandler
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "standard": {
-            "format": "[{asctime}] {levelname} {name}: {message}",
-            "style": "{",
-        },
-    },
-    "handlers": {
-        # Affiche les logs dans la console
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "standard",
-        },
-        # Les logs avec rotation dans logs/django_app.log
-        "file": {
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(BASE_DIR, "logs", "django_app.log"),
-            "maxBytes": 5 * 1024 * 1024,  # 5 Mo
-            "backupCount": 3,
-            "formatter": "standard",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console", "file"],
-            "level": "WARNING",
-            "propagate": True,
-        },
-        "__main__": {
-            "handlers": ["console", "file"],
-            "level": "DEBUG",
-        },
-        "nova.views": {
-            "handlers": ["console", "file"],
-            "level": "DEBUG",
-            "propagate": False,
-        },
-        "django.server": {
-            "handlers": ["console"],
-            "level": "INFO",
-            "propagate": False,
-        },
-    },
-}
-
+LOGGING["root"]["level"] = "WARNING"
 
 # Todo: Configuration de unfold
 UNFOLD = {
@@ -365,3 +323,22 @@ EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))  # Convertir en entier
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"  # Convertir en booléen
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+# Activer le mode demo
+DEMO_MODE = True
+
+# ? Sécurité  
+# Cookies sécurisés
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True  # HTTPS activé
+# Cookies protégés contre JS
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+# HSTS activé
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_SECONDS = 31536000
+# Sous-domaines inclus dans HSTS
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# Active la XSS filter du navigateur
+SECURE_BROWSER_XSS_FILTER = True

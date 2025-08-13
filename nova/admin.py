@@ -1,4 +1,5 @@
-from django.contrib import admin 
+from django.contrib import admin, messages
+from django.conf import settings
 
 # Import de 'admin' de unfold
 from unfold.admin import ModelAdmin, StackedInline
@@ -16,9 +17,9 @@ from django.utils.translation import gettext_lazy as _
 from unfold.contrib.filters.admin import (
     FieldTextFilter,
     RangeDateFilter,
-    ChoicesCheckboxFilter, 
+    ChoicesCheckboxFilter,
     BooleanRadioFilter,
-    SliderNumericFilter, 
+    SliderNumericFilter,
 )
 
 # Import pour améliorer la gestion du texte enrichi dans l'interface d'administration Django
@@ -40,7 +41,7 @@ from .models import (
     HotelInfo,
     Article,
 )
-from django.db import models 
+from django.db import models
 from django.db.models import TextChoices
 
 # unfold paginator
@@ -49,18 +50,34 @@ from unfold.paginator import InfinitePaginator
 # unregister
 admin.site.unregister(User)
 admin.site.unregister(Group)
-#
-from import_export import resources
-from import_export.admin import ImportExportModelAdmin, ExportActionModelAdmin
-from unfold.contrib.import_export.forms import (
-    ExportForm,
-    ImportForm,
-    SelectableFieldsExportForm,
-)
-from unfold.sections import TableSection, TemplateSection
 
 # Pour utiliser les décorateurs de unfold
 from unfold.decorators import display
+
+# Pour la configuration du demo mode
+from django.contrib import admin
+from django.conf import settings
+
+
+# Pour la configuration du readonly en accord avec le demo mode
+class DemoBlockSaveMixin:
+    def save_model(self, request, obj, form, change):
+        if getattr(settings, "DEMO_MODE", False):
+            messages.warning(request, _("Sauvegarde désactivée (mode démo)."))
+            return  # On ne sauvegarde pas
+        super().save_model(request, obj, form, change)
+
+    def delete_model(self, request, obj):
+        if getattr(settings, "DEMO_MODE", False):
+            messages.warning(request, _("Suppression désactivée (mode démo)."))
+            return  # On ne supprime pas
+        super().delete_model(request, obj)
+
+    def delete_queryset(self, request, queryset):
+        if getattr(settings, "DEMO_MODE", False):
+            messages.warning(request, _("Suppression désactivée (mode démo)."))
+            return  # On ne supprime pas
+        super().delete_queryset(request, queryset)
 
 
 # ? configuration du filtres numerique
@@ -69,14 +86,14 @@ class PriceNumericFilter(SliderNumericFilter):
     STEP = 10
 
 
-#
+# Badge
 class ElementStatus(TextChoices):
     ACTIVE = "OUI", _("Oui")
     INACTIVE = "NON", _("Non")
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin, ModelAdmin):
+class UserAdmin(DemoBlockSaveMixin, BaseUserAdmin, ModelAdmin):
     # Forms loaded from `unfold.forms`
     form = UserChangeForm
     add_form = UserCreationForm
@@ -84,13 +101,13 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
 
 
 @admin.register(Group)
-class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+class GroupAdmin(DemoBlockSaveMixin, BaseGroupAdmin, ModelAdmin):
     pass
 
 
 # TODO : article pour stocker les articles du blog du restaurant
 @admin.register(Article)
-class ArticleAdmin(ModelAdmin):
+class ArticleAdmin(DemoBlockSaveMixin, ModelAdmin):
     paginator = InfinitePaginator
     show_full_result_count = False
 
@@ -174,7 +191,7 @@ class ArticleAdmin(ModelAdmin):
 
 # TODO : HotelInfo pour stocker les infos de l'hôtel
 @admin.register(HotelInfo)
-class HotelInfoAdmin(ModelAdmin):
+class HotelInfoAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = ("name", "adresse", "Email", "create_date")
     search_fields = ("app_name",)  # Permet de rechercher par app_name
 
@@ -215,9 +232,10 @@ class HotelInfoAdmin(ModelAdmin):
     paginator = InfinitePaginator
     show_full_result_count = False
 
+
 # TODO : testimony pour stocker les témoignagnes
 @admin.register(testimony)
-class testimonyAdmin(ModelAdmin):
+class testimonyAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = ("name", "publish", "create_date")
     search_fields = ("nom_prenom",)  # Permet de rechercher par nom_prenom
 
@@ -259,9 +277,10 @@ class testimonyAdmin(ModelAdmin):
     paginator = InfinitePaginator
     show_full_result_count = False
 
+
 # TODO : LienSocialeCompany pour stocker les lien sociales de l'hôtel
 @admin.register(LienSocialeCompany)
-class LienSocialeCompanyAdmin(ModelAdmin):
+class LienSocialeCompanyAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = ("designation", "lien")
     search_fields = ("designation",)  # Permet de rechercher par designation
 
@@ -270,13 +289,14 @@ class LienSocialeCompanyAdmin(ModelAdmin):
     list_filter = [
         ("designation", FieldTextFilter),
     ]
-    
+
     paginator = InfinitePaginator
     show_full_result_count = False
 
+
 # TODO : ContactCompany pour stocker les contacts de l'hôtel
 @admin.register(ContactCompany)
-class ContactCompanyAdmin(ModelAdmin):
+class ContactCompanyAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = ("contact", "create_date")
     search_fields = ("contact",)  # Permet de rechercher par contact
 
@@ -299,7 +319,7 @@ class ContactCompanyAdmin(ModelAdmin):
 
 # TODO : NewsLetterEmail pour stocker les emails des visiteurs pour les articles
 @admin.register(NewsLetterEmail)
-class NewsLetterEmailAdmin(ModelAdmin):
+class NewsLetterEmailAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = ("mail", "status")
     search_fields = ("email_visteur",)  # Permet de rechercher par email
 
@@ -337,7 +357,7 @@ class NewsLetterEmailAdmin(ModelAdmin):
 
 # TODO : Gestion des photos
 @admin.register(Photo)
-class PhotoAdmin(admin.ModelAdmin):
+class PhotoAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = (
         "title",
         "create_date",
@@ -368,7 +388,7 @@ class PhotoAdmin(admin.ModelAdmin):
 
 # TODO : Gestion des plats
 @admin.register(plat)
-class platAdmin(ModelAdmin):
+class platAdmin(DemoBlockSaveMixin, ModelAdmin):
     formfield_overrides = {
         models.TextField: {
             "widget": WysiwygWidget,
@@ -411,13 +431,12 @@ class platAdmin(ModelAdmin):
     paginator = InfinitePaginator
     show_full_result_count = False
 
+
 # TODO : Gestion des agents du service clients
 @admin.register(ServiceClient)
-class ServiceclientAdmin(ModelAdmin):
+class ServiceclientAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = ("nom_complet", "pin", "status", "create_date")
-    search_fields = (
-        "nom_complet", 
-    )  # Permet de rechercher par nom_complet  
+    search_fields = ("nom_complet",)  # Permet de rechercher par nom_complet
 
     # ajout de filtrage à l’aide de l’attribut list_filter
     list_filter_submit = True  # Bouton de soumission en bas du filtre
@@ -469,7 +488,7 @@ class ServiceclientAdmin(ModelAdmin):
 
 # TODO : EmailSend pour stocker les emails des visiteurs et en même temps envoyer aux agents du service clients
 @admin.register(EmailSend)
-class EmailSendAdmin(ModelAdmin):
+class EmailSendAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = ("nom", "contact", "email", "create_date")
     search_fields = ("email",)  # Permet de rechercher par email
 
@@ -492,8 +511,8 @@ class EmailSendAdmin(ModelAdmin):
 
 # TODO : Gestion des chambres
 @admin.register(chambre)
-class chambreAdmin(ModelAdmin):
-    list_display = ("numero", "room", "price", "nb_lit", "pin", "status", "create_date") 
+class chambreAdmin(DemoBlockSaveMixin, ModelAdmin):
+    list_display = ("numero", "room", "price", "nb_lit", "pin", "status", "create_date")
     search_fields = ["numero_chambre"]
     # ajout de filtrage à l’aide de l’attribut list_filter
     list_filter_submit = True  # Bouton de soumission en bas du filtre
@@ -586,7 +605,7 @@ class chambreAdmin(ModelAdmin):
 
 # TODO : Gestion des réservation directement sur les chambres
 @admin.register(reservation_chambre)
-class reservation_chambreAdmin(ModelAdmin): 
+class reservation_chambreAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = (
         "numero",
         "room",
@@ -679,12 +698,12 @@ class reservation_chambreAdmin(ModelAdmin):
         ordering="id_chambre",
         description="Chambre",
     )
-    def room(self, obj): 
-        if obj.id_chambre.type_chambre == "S" :
+    def room(self, obj):
+        if obj.id_chambre.type_chambre == "S":
             return "Simple"
-        elif obj.id_chambre.type_chambre == "F" :
+        elif obj.id_chambre.type_chambre == "F":
             return "Familiale"
-        elif obj.id_chambre.type_chambre == "P" :
+        elif obj.id_chambre.type_chambre == "P":
             return "Présidentielle"
 
     paginator = InfinitePaginator
@@ -693,7 +712,7 @@ class reservation_chambreAdmin(ModelAdmin):
 
 # TODO : Gestion des réservation (indirect) :)
 @admin.register(reservation)
-class reservationAdmin(ModelAdmin):
+class reservationAdmin(DemoBlockSaveMixin, ModelAdmin):
     list_display = (
         "name",
         "contact",

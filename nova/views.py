@@ -243,7 +243,7 @@ def reservation_view(request):
     return HttpResponse(template.render(context, request))
 
 
-# TODO : Affichage de la page contact
+# TODO : Affichage de la page contact 
 def contact(request):
     template = loader.get_template("contact.html")
 

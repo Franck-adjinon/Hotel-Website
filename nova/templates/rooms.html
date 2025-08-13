@@ -31,6 +31,7 @@
 
 <!-- Verify disponibility Section -->
 {% block Roompage_section %} 
+<!-- form Section --> 
   <section class="section pb-4">
     <div class="container"> 
       <div class="row check-availabilty" id="next">
@@ -92,7 +93,7 @@
     <div class="row"> 
       {% for room in page_obj %}
         <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-          <a href="{% url 'chambre_detail' room.id_chambre %}" title="Cliquer pour afficher les détails de la chambre" class="room">
+          <a href="{{ room.get_absolute_url }}" title="Cliquer pour afficher les détails de la chambre" class="room">
             <figure class="img-wrap">
               <img src="{{ room.image.url }}" alt="image de {{ room.description }}" class="img-fluid mb-3">
             </figure>                
@@ -107,7 +108,7 @@
                 {% endif %}
               </h2>
               <span class="text-uppercase letter-spacing-1"> 
-                {{room.prix_nuit|floatformat:"-2"}}
+                {{ room.prix_nuit|floatformat:"-2" }}
                 / par nuit
               </span>
             </div>
@@ -154,7 +155,7 @@
     </div>  
     {% for rm in best_rooms %} 
       <div class="site-block-half d-block d-lg-flex bg-white" data-aos="fade" data-aos-delay="{{ forloop.counter0 }}00">
-        <a href="{% url 'chambre_detail' rm.id_chambre %}" title="Cliquer pour afficher les détails de la chambre" class="{% cycle 'image d-block bg-image-2' 'image d-block bg-image-2 order-2' %}" style="background-image: url('{{rm.image.url}}');"></a>
+        <a href="{{ rm.get_absolute_url }}" title="Cliquer pour afficher les détails de la chambre" class="{% cycle 'image d-block bg-image-2' 'image d-block bg-image-2 order-2' %}" style="background-image: url('{{rm.image.url}}');"></a>
         <div class="{% cycle 'text' 'text order-1' %}">
           <span class="d-block mb-4">
             <span class="display-4 text-primary">  
@@ -186,7 +187,7 @@
 <!-- Hotel adress section -->
 {% block hotel_adress %} 
   {% if site_info %}
-    {{site_info.app_adresse}}
+    {{ site_info.app_adresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->
@@ -194,7 +195,7 @@
 <!-- Hotel contact section -->
 {% block hotel_contact%} 
   {% for ct in contacts_site %}
-    {{ct.contact}} <br>
+    {{ ct.contact }} <br>
   {% endfor %} 
 {% endblock %}
 <!-- Fin section -->
@@ -202,7 +203,7 @@
 <!-- Hotel mail section -->
 {% block hotel_mail %} 
   {% if site_info %}
-    {{site_info.app_mailadresse}}
+    {{ site_info.app_mailadresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->

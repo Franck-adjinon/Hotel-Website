@@ -22,11 +22,11 @@
 
 {% block leadtext %} 
   <h1 class="heading mb-3">
-    {{thanks_text_intro}}
+    {{ thanks_text_intro }}
   </h1>
   <ul class="custom-breadcrumbs mb-4">
     <li> 
-      {{thanks_text_content}}
+      {{ thanks_text_content }}
     </li>
   </ul>
 {% endblock %} 
@@ -35,7 +35,7 @@
 <!-- Hotel adress section -->
 {% block hotel_adress %} 
   {% if site_info %}
-    {{site_info.app_adresse}}
+    {{ site_info.app_adresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->
@@ -43,7 +43,7 @@
 <!-- Hotel contact section -->
 {% block hotel_contact%} 
   {% for ct in contacts_site %}
-    {{ct.contact}} <br>
+    {{ ct.contact }} <br>
   {% endfor %} 
 {% endblock %}
 <!-- Fin section -->
@@ -51,7 +51,7 @@
 <!-- Hotel mail section -->
 {% block hotel_mail %} 
   {% if site_info %}
-    {{site_info.app_mailadresse}}
+    {{ site_info.app_mailadresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->

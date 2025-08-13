@@ -9,10 +9,7 @@
 
 {% block meta_description %}
   <meta name="description" content="Réservez facilement votre séjour dans notre hôtel 5 étoiles : choisissez vos dates, chambres et options en quelques clics.">
-{% endblock %}
-
-
-
+{% endblock %} 
 
 
 {% block app_name %}  
@@ -43,57 +40,57 @@
             {{ form.non_field_errors }}
             <div class="row">
               <div class="col-md-6 form-group">
-                {{ form.full_name.errors }} 
                 <label class="text-black font-weight-bold" for="{{ form.full_name.id_for_label }}">Nom Complet</label> 
                 {{ form.full_name }}  
+                {{ form.full_name.errors }} 
               </div>
               <div class="col-md-6 form-group">
-                {{ form.contact.errors }} 
                 <label class="text-black font-weight-bold" for="{{ form.contact.id_for_label }}">Contact</label>
                 {{ form.contact }}  
+                {{ form.contact.errors }} 
               </div>
             </div>
         
             <div class="row">
               <div class="col-md-12 form-group">
-                {{ form.email.errors }} 
                 <label class="text-black font-weight-bold" for="{{ form.email.id_for_label }}">Email</label>
                 {{ form.email }} 
+                {{ form.email.errors }} 
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 form-group">
-                {{ form.datearrivee.errors }} 
                 <label class="text-black font-weight-bold" for="{{ form.datearrivee.id_for_label }}">Date d'arrivée</label>
                 {{ form.datearrivee }}  
+                {{ form.datearrivee.errors }} 
               </div>
               <div class="col-md-6 form-group">
-                {{ form.datedepart.errors }} 
                 <label class="text-black font-weight-bold" for="{{ form.datedepart.id_for_label }}">Date de départ</label>
                 {{ form.datedepart }}  
+                {{ form.datedepart.errors }} 
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 form-group">
-                {{ form.adultes.errors }} 
                 <label for="{{ form.adultes.id_for_label }}" class="font-weight-bold text-black">Adultes</label>
                 <div class="field-icon-wrap"> 
                   {{ form.adultes }}  
+                  {{ form.adultes.errors }} 
                 </div>
               </div>
               <div class="col-md-6 form-group">
-                {{ form.enfants.errors }} 
                 <label for="{{ form.enfants.id_for_label }}" class="font-weight-bold text-black">Enfants</label>
                 <div class="field-icon-wrap"> 
                   {{ form.enfants }}  
+                  {{ form.enfants.errors }} 
                 </div>
               </div>
             </div>
             <div class="row mb-4">
               <div class="col-md-12 form-group">
-                {{ form.message.errors }} 
                 <label class="text-black font-weight-bold" for="{{ form.message.id_for_label }}">Notes</label>
                 {{ form.message }}  
+                {{ form.message.errors }} 
               </div>
             </div>
             <div class="row">
@@ -106,15 +103,15 @@
         <div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
           <div class="row">
             <div class="col-md-10 ml-auto contact-info">
-              <p><span class="d-block">Adresse:</span> <span class="text-black"> {{site_info.app_adresse}}</span></p>
+              <p><span class="d-block">Adresse:</span> <span class="text-black"> {{ site_info.app_adresse }}</span></p>
               <p><span class="d-block">Contact:</span> 
                 <span class="text-black"> 
                   {% for ct in contacts_site %}
-                    {{ct.contact}} <br>
+                    {{ ct.contact }} <br>
                   {% endfor %}
                 </span>
               </p>
-              <p><span class="d-block">Email:</span> <span class="text-black"> {{site_info.app_mailadresse}}</span></p>
+              <p><span class="d-block">Email:</span> <span class="text-black"> {{ site_info.app_mailadresse }}</span></p>
             </div>
           </div>
         </div>
@@ -133,12 +130,12 @@
           {% for tem in temoignages %}
             <div class="testimonial text-center slider-item">
               <div class="author-image mb-3">
-                <img src="{{tem.image.url}}" alt="Image du client {{tem.nom_prenom}}" class="rounded-circle mx-auto">
+                <img src="{{ tem.image.url }}" alt="Image du client {{ tem.nom_prenom }}" class="rounded-circle mx-auto">
               </div>
               <blockquote> 
-                <p>&ldquo; {{tem.temoignage}} &rdquo;</p>
+                <p>&ldquo; {{ tem.temoignage }} &rdquo;</p>
               </blockquote>
-              <p><em>{{tem.nom_prenom}} </em></p>
+              <p><em>{{ tem.nom_prenom }} </em></p>
             </div> 
           {% endfor %} 
         </div>
@@ -152,7 +149,7 @@
 <!-- Hotel adress section -->
 {% block hotel_adress %} 
   {% if site_info %}
-    {{site_info.app_adresse}}
+    {{ site_info.app_adresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->
@@ -160,7 +157,7 @@
 <!-- Hotel contact section -->
 {% block hotel_contact%} 
   {% for ct in contacts_site %}
-    {{ct.contact}} <br>
+    {{ ct.contact }} <br>
   {% endfor %} 
 {% endblock %}
 <!-- Fin section -->
@@ -168,7 +165,7 @@
 <!-- Hotel mail section -->
 {% block hotel_mail %} 
   {% if site_info %}
-    {{site_info.app_mailadresse}}
+    {{ site_info.app_mailadresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->

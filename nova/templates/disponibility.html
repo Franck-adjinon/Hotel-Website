@@ -22,7 +22,7 @@
 {% block leadtext %} 
   <h1 class="heading mb-3">Chambres</h1>
   <ul class="custom-breadcrumbs mb-4">
-    <li><a href="#">Accueil</a></li>
+    <li><a href="{% url 'index' %}">Accueil</a></li>
     <li>&bullet;</li>
     <li>Chambres</li>
   </ul> 
@@ -46,7 +46,7 @@
           <div class="{% cycle 'text' 'text order-1' %}">
             <span class="d-block mb-4">
               <span class="display-4 text-primary">
-                {{room.prix_nuit|floatformat:"-2"}} CFA
+                {{ room.prix_nuit|floatformat:"-2" }} CFA
               </span> 
               <span class="text-uppercase letter-spacing-2">
                 / par nuit
@@ -66,7 +66,7 @@
               </h2>
             {% endif %}
             <p>
-              {{room.description}}
+              {{ room.description }}
             </p>
             <p><a href="#" class="btn btn-primary text-white">Réservez maintenant</a></p>
           </div>
@@ -81,7 +81,7 @@
 <!-- Hotel adress section -->
 {% block hotel_adress %} 
   {% if site_info %}
-    {{site_info.app_adresse}}
+    {{ site_info.app_adresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->
@@ -89,7 +89,7 @@
 <!-- Hotel contact section -->
 {% block hotel_contact%} 
   {% for ct in contacts_site %}
-    {{ct.contact}} <br>
+    {{ ct.contact }} <br>
   {% endfor %} 
 {% endblock %}
 <!-- Fin section -->
@@ -97,7 +97,7 @@
 <!-- Hotel mail section -->
 {% block hotel_mail %} 
   {% if site_info %}
-    {{site_info.app_mailadresse}}
+    {{ site_info.app_mailadresse }}
   {% endif %}
 {% endblock %}
 <!-- Fin section -->

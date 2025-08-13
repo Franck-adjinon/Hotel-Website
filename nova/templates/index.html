@@ -131,7 +131,7 @@
             
             {% for room in rooms %} 
                 <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-                    <a href="{% url 'chambre_detail' room.id_chambre %}" class="room">
+                    <a href="{{ room.get_absolute_url }}" class="room">
                     <figure class="img-wrap">
                         <img src="{{ room.image.url }}" alt="image de {{ room.description }}" class="img-fluid mb-3">
                     </figure>                
@@ -146,7 +146,7 @@
                         {% endif %}
                         </h2>
                         <span class="text-uppercase letter-spacing-1"> 
-                        {{room.prix_nuit|floatformat:"-2"}}
+                        {{ room.prix_nuit|floatformat:"-2" }}
                         / par nuit
                         </span>
                     </div>
@@ -178,7 +178,7 @@
                 <div class="home-slider major-caousel owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200"> 
                     {% for pict in pictures %}
                         <div class="slider-item">
-                            <a href="{{pict.image.url}}" data-fancybox="images" data-caption="{{pict.titre}}"><img src="{{pict.image.url}}" alt="{{pict.titre}}" class="img-fluid"></a>
+                            <a href="{{ pict.image.url }}" data-fancybox="images" data-caption="{{ pict.titre }}"><img src="{{ pict.image.url }}" alt="{{ pict.titre }}" class="img-fluid"></a>
                         </div>
                     {% endfor %} 
                 </div>
@@ -227,7 +227,7 @@
                             <div class="{% cycle 'col-md-6' 'col-md-6' as stripe %}"> 
                                 <div class="food-menu mb-5">
                                     <span class="d-block text-primary h4 mb-3">{{ plt.prix|floatformat:-2 }} CFA</span>
-                                    <h3 class="text-white"><a href="{% url 'plat_detail' plt.nom %}" class="text-white">{{ plt.nom }}</a></h3>
+                                    <h3 class="text-white"><a href="{{ plt.get_absolute_url }}" class="text-white">{{ plt.nom }}</a></h3>
                                     <p class="text-white text-opacity-7">
                                         {{ plt.description|truncatewords:10 }}
                                     </p>
@@ -238,7 +238,7 @@
                                 <div class="{% cycle 'col-md-6' 'col-md-6' as stripe %}"> 
                                     <div class="food-menu mb-5">
                                         <span class="d-block text-primary h4 mb-3">{{ plt.prix|floatformat:-2 }} CFA</span>
-                                        <h3 class="text-white"><a href="{% url 'plat_detail' plt.nom %}" class="text-white">{{ plt.nom }}</a></h3>
+                                        <h3 class="text-white"><a href="{{ plt.get_absolute_url }}" class="text-white">{{ plt.nom }}</a></h3>
                                         <p class="text-white text-opacity-7">
                                             {{ plt.description|truncatewords:10 }}
                                         </p>
@@ -258,7 +258,7 @@
                                 <div class="col-md-6">
                                     <div class="food-menu mb-5">
                                         <span class="d-block text-primary h4 mb-3">{{ dessert.prix|floatformat:-2 }} CFA</span>
-                                        <h3 class="text-white"><a href="{% url 'plat_detail' dessert.nom %}" class="text-white">{{ dessert.nom }}</a></h3>
+                                        <h3 class="text-white"><a href="{{ dessert.get_absolute_url }}" class="text-white">{{ dessert.nom }}</a></h3>
                                         <p class="text-white text-opacity-7">
                                             {{ dessert.description|truncatewords:10 }}
                                         </p>
@@ -269,7 +269,7 @@
                                 <div class="col-md-6">
                                     <div class="food-menu mb-5">
                                         <span class="d-block text-primary h4 mb-3">{{ dessert.prix|floatformat:-2 }} CFA</span>
-                                        <h3 class="text-white"><a href="{% url 'plat_detail' dessert.nom %}" class="text-white">{{ dessert.nom }}</a></h3>
+                                        <h3 class="text-white"><a href="{{ dessert.get_absolute_url }}" class="text-white">{{ dessert.nom }}</a></h3>
                                         <p class="text-white text-opacity-7">
                                             {{ dessert.description|truncatewords:10 }}
                                         </p>
@@ -289,7 +289,7 @@
                                     <div class="col-md-6">
                                         <div class="food-menu mb-5">
                                             <span class="d-block text-primary h4 mb-3">{{ boisson.prix|floatformat:-2 }} CFA</span>
-                                            <h3 class="text-white"><a href="{% url 'plat_detail' boisson.nom %}" class="text-white">{{ boisson.nom }}</a></h3>
+                                            <h3 class="text-white"><a href="{{ boisson.get_absolute_url }}" class="text-white">{{ boisson.nom }}</a></h3>
                                             <p class="text-white text-opacity-7">
                                                 {{ boisson.description|truncatewords:10 }}
                                             </p>
@@ -301,7 +301,7 @@
                                     <div class="col-md-6">
                                         <div class="food-menu mb-5">
                                             <span class="d-block text-primary h4 mb-3">{{ boisson.prix|floatformat:-2 }} CFA</span>
-                                            <h3 class="text-white"><a href="{% url 'plat_detail' boisson.nom %}" class="text-white">{{ boisson.nom }}</a></h3>
+                                            <h3 class="text-white"><a href="{{ boisson.get_absolute_url }}" class="text-white">{{ boisson.nom }}</a></h3>
                                             <p class="text-white text-opacity-7">
                                                 {{ boisson.description|truncatewords:10 }}
                                             </p>
@@ -338,12 +338,12 @@
                 {% for tem in temoignages %}
                     <div class="testimonial text-center slider-item">
                         <div class="author-image mb-3">
-                        <img src="{{tem.image.url}}" alt="Image du client {{tem.nom_prenom}}" class="rounded-circle mx-auto">
+                        <img src="{{ tem.image.url }}" alt="Image du client {{ tem.nom_prenom }}" class="rounded-circle mx-auto">
                         </div>
                         <blockquote> 
-                        <p>&ldquo; {{tem.temoignage}} &rdquo;</p>
+                        <p>&ldquo; {{ tem.temoignage }} &rdquo;</p>
                         </blockquote>
-                        <p><em>{{tem.nom_prenom}} </em></p>
+                        <p><em>{{ tem.nom_prenom }} </em></p>
                     </div> 
                 {% endfor %}
 
@@ -374,10 +374,10 @@
             {% for Art in Articles %}
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12 post mb-5" data-aos="fade-up" data-aos-delay="{{ forloop.counter0 }}00"> 
                     <div class="media media-custom d-block mb-4 h-100">
-                    <a href="{% url 'article_detail' Art.slug %}" class="mb-4 d-block"><img src="{{ Art.cover.url }}" alt="{{ Art.cover_alt_text }}" class="img-fluid"></a>
+                    <a href="{{ Art.get_absolute_url }}" class="mb-4 d-block"><img src="{{ Art.cover.url }}" alt="{{ Art.cover_alt_text }}" class="img-fluid"></a>
                     <div class="media-body">
                         <span class="meta-post">{{ Art.date_creation|date:"d M Y" }}</span>
-                        <h2 class="mt-0 mb-3"><a href="{% url 'article_detail' Art.slug %}">{{ Art.lead }}</a></h2>
+                        <h2 class="mt-0 mb-3"><a href="{{ Art.get_absolute_url }}">{{ Art.lead }}</a></h2>
                         <p>{{ Art.content|safe|truncatewords:10 }}</p>
                     </div>
                     </div> 

@@ -3,4 +3,4 @@ def environment_callback(request):
     """
     Permet d'indiquer aux administrateurs dans quel environnement ils travaillent (ex. : Production, Développement, etc.)
     """
-    return ["Developpement", "info"] # info, danger, warning, success
+    return ["Production", "primary"]  # info, danger, warning, success

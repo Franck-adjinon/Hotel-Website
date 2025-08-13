@@ -4,9 +4,11 @@ from django.core.files.base import ContentFile
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+
 #
 import os
 from dotenv import load_dotenv
+from django.shortcuts import reverse
 
 
 # TODO : article pour stocker les articles
@@ -26,6 +28,13 @@ class Article(models.Model):
         "Texte alternatif pour accessibilité de l'image principal", max_length=125
     )
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Article"
+        verbose_name_plural = "Articles"
+
+    def __str__(self):
+        return f"{self.titre} {self.date_creation}"
 
     def save(self, *args, **kwargs):
         # Compression de l'image de couverture
@@ -65,7 +74,7 @@ class Article(models.Model):
                 )
 
         """Envoie un email à tout les abonner de la newsletter"""
-        from .task import send_email_abonne 
+        from .task import send_email_abonne
 
         is_new = self._state.adding
 
@@ -80,8 +89,8 @@ class Article(models.Model):
                 sujet=sujet, from_client=mail, titre_article=titre, contenu=texte
             )
 
-    def __str__(self):
-        return f"{self.titre} {self.date_creation}"
+    def get_absolute_url(self):
+        return reverse("article_detail", args=[str(self.slug)])
 
 
 # TODO : HotelInfo pour stocker les informations de l'hôtel
@@ -91,6 +100,10 @@ class HotelInfo(models.Model):
     app_adresse = models.CharField("Adresse Hôtel", max_length=50)
     app_mailadresse = models.EmailField("Email Hôtel", max_length=254)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Information"
+        verbose_name_plural = "Informations"
 
     def __str__(self):
         return f"{self.app_name} {self.app_adresse}"
@@ -102,6 +115,10 @@ class LienSocialeCompany(models.Model):
     designation = models.CharField("Nom de la Plateforme", max_length=50, unique=True)
     lien = models.CharField("lien vers le compte", max_length=255)
 
+    class Meta:
+        verbose_name = "Lien"
+        verbose_name_plural = "Liens"
+
     def __str__(self):
         return self.lien
 
@@ -112,6 +129,10 @@ class ContactCompany(models.Model):
     contact = models.CharField("Contact", max_length=50, unique=True)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
 
+    class Meta:
+        verbose_name = "Contact"
+        verbose_name_plural = "Contacts"
+
     def __str__(self):
         return f"{self.contact}"
 
@@ -121,6 +142,10 @@ class NewsLetterEmail(models.Model):
     id_new = models.AutoField(primary_key=True)
     email_visteur = models.EmailField("Email visiteur", max_length=254, unique=True)
     actif = models.BooleanField("actif ?", default=True)
+
+    class Meta:
+        verbose_name = "Abonné"
+        verbose_name_plural = "Abonnés"
 
     def __str__(self):
         return f"{self.email_visteur}"
@@ -134,12 +159,19 @@ class ServiceClient(models.Model):
         "Texte alternatif pour accessibilité de l'image", max_length=125
     )
     nom_complet = models.CharField("Nom Complet", max_length=100, unique=True)
-    email = models.EmailField('Email', max_length=254, default="johndoe@gmail.com")
+    email = models.EmailField("Email", max_length=254, default="johndoe@gmail.com")
     role = models.CharField("Rôle", max_length=50, default="Agent")
     description = models.CharField("Description", max_length=255)
     pinned = models.BooleanField("Épingler ?", default=False)
     actif = models.BooleanField("Agent actif ?", default=True)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Service"
+        verbose_name_plural = "Services"
+
+    def __str__(self):
+        return f"{self.nom_complet}"
 
     def save(self, *args, **kwargs):
         if self.image:
@@ -159,9 +191,6 @@ class ServiceClient(models.Model):
 
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return f"{self.nom_complet}"
-
 
 # TODO : EmailSend pour stocker les mails envoyer au agents du service clients par les clients
 class EmailSend(models.Model):
@@ -171,6 +200,10 @@ class EmailSend(models.Model):
     email = models.EmailField("Email Client", max_length=254)
     message = models.CharField("Message du Client", max_length=255)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Mail"
+        verbose_name_plural = "Mails"
 
     def __str__(self):
         return f"{self.nom} {self.email}"
@@ -182,6 +215,13 @@ class Photo(models.Model):
     titre = models.CharField("Titre", max_length=255)
     image = models.ImageField("Image", upload_to="photos/")
     date_creation = models.DateTimeField("Date création", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Image"
+        verbose_name_plural = "Images"
+
+    def __str__(self):
+        return self.titre
 
     def save(self, *args, **kwargs):
         if self.image:
@@ -201,9 +241,6 @@ class Photo(models.Model):
 
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.titre
-
 
 # TODO:model pour la gestion des témoignages
 class testimony(models.Model):
@@ -213,6 +250,13 @@ class testimony(models.Model):
     temoignage = models.CharField("Témoignage", max_length=250)
     visible = models.BooleanField("Visible ?", default=False)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Témoignage"
+        verbose_name_plural = "Témoignages"
+
+    def __str__(self):
+        return self.nom_prenom
 
     def save(self, *args, **kwargs):
         if self.image:
@@ -232,9 +276,6 @@ class testimony(models.Model):
 
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return self.nom_prenom
-
 
 # TODO :  Pour la gestion des réservations
 class reservation(models.Model):
@@ -249,6 +290,13 @@ class reservation(models.Model):
     message = models.CharField("Message Client", max_length=255)
     is_confirm = models.BooleanField("Confirmer ?", default=False)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Réservation"
+        verbose_name_plural = "Réservations"
+
+    def __str__(self):
+        return f"{self.nom_prenom} {self.contact}"
 
 
 # TODO : Pour la gestion des plats
@@ -268,8 +316,15 @@ class plat(models.Model):
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
     date_update = models.DateTimeField("Date Mise à jour", default=timezone.now)
 
+    class Meta:
+        verbose_name = "Plat"
+        verbose_name_plural = "Plats"
+
     def __str__(self):
         return f"{self.nom}"
+
+    def get_absolute_url(self):
+        return reverse("plat_detail", args=[str(self.nom)])
 
 
 # TODO : Pour la gestion des chambre
@@ -291,8 +346,15 @@ class chambre(models.Model):
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
     date_update = models.DateTimeField("Date Mise à jour", default=timezone.now)
 
+    class Meta:
+        verbose_name = "Chambre"
+        verbose_name_plural = "Chambres"
+
     def __str__(self):
         return f"{self.prix_nuit}"
+
+    def get_absolute_url(self):
+        return reverse("chambre_detail", args=[str(self.id_chambre)])
 
 
 # TODO :  Pour la gestion des réservations associer au chambre
@@ -306,6 +368,18 @@ class reservation_chambre(models.Model):
     nombre_adulte = models.IntegerField("Nombre d'adultes")
     nombre_enfant = models.IntegerField("Nombre d'enfants")
     message = models.CharField("Message Client", max_length=255)
-    id_chambre = models.ForeignKey(chambre, on_delete=models.CASCADE)
-    is_finish = models.BooleanField('Terminer ?', default=False)
+    id_chambre = models.ForeignKey(
+        chambre,
+        on_delete=models.CASCADE,
+        related_name="reservations",
+        related_query_name="reservation",
+    )
+    is_finish = models.BooleanField("Terminer ?", default=False)
     date_creation = models.DateTimeField("Date Création", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Réservation Chambre"
+        verbose_name_plural = "Réservations de chambre"
+
+    def __str__(self):
+        return f"{self.nom} {self.contact}"

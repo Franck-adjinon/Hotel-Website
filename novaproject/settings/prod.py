@@ -51,12 +51,12 @@ INSTALLED_APPS = [
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
     # Fin d'ajout des apps relatif à unfold
-    "whitenoise.runserver_nostatic",  # Whitenoise
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",  # Whitenoise
     "django.contrib.staticfiles",
     "nova.apps.NovaConfig",  # nova
     "django_cleanup.apps.CleanupConfig",  #  Ajout de cette ligne pour inclure Django cleanup

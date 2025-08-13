@@ -12,3 +12,4 @@ openpyxl             # Librairie utilisée par tablib pour gérer les .xlsx
 xlwt                 # Pour exporter en .xls
 psycopg2-binary
 gunicorn
+whitenoise

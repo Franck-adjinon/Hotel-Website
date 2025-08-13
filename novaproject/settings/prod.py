@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 from .base import *
+
 load_dotenv()
 
 # import dans le cadre de la gestion des paramètres du package unfold
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -91,7 +93,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "novaproject.wsgi.application"
 
 
-# Database 
+# Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -104,7 +106,7 @@ DATABASES = {
 }
 
 
-# Password validation 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -121,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization 
+# Internationalization
 LANGUAGE_CODE = "fr"
 
 TIME_ZONE = "UTC"
@@ -137,16 +139,17 @@ LANGUAGES = (
 )
 
 
-
-# Gestion des fichiers static 
+# Gestion des fichiers static
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "novaproject/static"),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "novaproject/static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
-# Default primary key field type 
+# Activer la compression et le caching
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Gestion des fichiers média
@@ -327,7 +330,7 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 # Activer le mode demo
 DEMO_MODE = True
 
-# ? Sécurité  
+# ? Sécurité
 # Cookies sécurisés
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

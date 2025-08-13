@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     "unfold.contrib.import_export",
     "unfold.contrib.guardian",
     "unfold.contrib.simple_history",
-    # Fin d'ajout des apps relatif à unfold
+    # Fin d'ajout des apps relatif à unfold 
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -63,7 +63,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
+    "django.middleware.security.SecurityMiddleware", 
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -93,7 +93,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "novaproject.wsgi.application"
 
 
-# Database 
+# Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -106,7 +106,7 @@ DATABASES = {
 }
 
 
-# Password validation 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -123,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization 
+# Internationalization
 LANGUAGE_CODE = "fr"
 
 TIME_ZONE = "UTC"
@@ -139,14 +139,14 @@ LANGUAGES = (
 )
 
 
-# Static files (CSS, JavaScript, Images)  
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 # le chemin du dossier Static
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "novaproject/static"),
 ]
 
-# Default primary key field type 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Gestion des fichiers média

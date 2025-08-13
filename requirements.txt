@@ -11,3 +11,4 @@ tablib[xlsx]         # Pour exporter en .xlsx
 openpyxl             # Librairie utilisée par tablib pour gérer les .xlsx
 xlwt                 # Pour exporter en .xls
 psycopg2-binary
+gunicorn

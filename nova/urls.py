@@ -51,7 +51,4 @@ urlpatterns = [
     path("verify_room", views.verify_disponibility, name="verify_room"),
 ]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-else:
-    # En prod, on sert aussi les media via Django juste pour la démo
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

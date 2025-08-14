@@ -71,3 +71,9 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_BROWSER_XSS_FILTER = True
 # pour empêcher le MIME sniffing
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+
+# # En prod, on sert aussi les media via Django juste pour la démo :
+if DEBUG is False:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")

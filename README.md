@@ -108,6 +108,15 @@ You can also add some data by creating objects directly in the code or by import
 
 ---
 
+## 🔑 Access to the interface administration
+
+- Admin url : `/admin`
+- Default identifiers to test :  
+  - **Username:** franck  
+  - **Password:** franck4$
+
+---
+
 ## 🤝 Contribute
 
 Contributions are welcome! If you'd like to help improve this project, here's how you can contribute:

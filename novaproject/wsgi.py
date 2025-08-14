@@ -10,9 +10,7 @@ application = get_wsgi_application()
 
 # importer settings
 from django.conf import settings
-import os as pyos 
-
-print("MEDIA_ROOT content:", pyos.listdir(settings.MEDIA_ROOT))
+import os as pyos  
 
 # WhiteNoise pour les statics
 application = WhiteNoise(application, root=str(settings.STATIC_ROOT))

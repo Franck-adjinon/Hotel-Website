@@ -19,10 +19,7 @@ env/
 
 # Logs
 *.log
-.logs/
-
-# Dossiers de statiques générées par collectstatic
-staticfiles/
+.logs/ 
 
 # fichier de configuration de flake8, black et isort
 .flake8
